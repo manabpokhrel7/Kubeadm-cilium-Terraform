@@ -88,6 +88,7 @@
         mode: '0440'
         validate: /usr/sbin/visudo -cf %s
 
-    - name: Install cilium
+    - name: Install cilium and Enable Hubble
       shell: |
         cilium install --version 1.19.3 --set ipam.mode=kubernetes --set kubeProxyReplacement=true
+        cilium hubble enable
