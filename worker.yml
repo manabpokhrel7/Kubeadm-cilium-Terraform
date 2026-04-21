@@ -1,0 +1,21 @@
+- name: Join on the worker node
+  hosts: workers
+  become: true
+  tasks:
+    - name: Update the cache
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+
+    - name: Copy the join script
+      ansible.builtin.copy:
+        src: join.sh
+        dest: /tmp/join.sh
+      become: false
+       
+    - name: Execute the join command
+      ansible.builtin.shell: sh /tmp/join.sh
+      become: true
+      # Add this to prevent joining a cluster you're already in
+      args:
+        creates: /etc/kubernetes/kubelet.conf

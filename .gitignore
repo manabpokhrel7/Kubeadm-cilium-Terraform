@@ -1,0 +1,9 @@
+join.sh
+.git
+TerraformVM/terraform.*
+TerraformVM/variables.tfvars
+TerraformVM/key.json
+TerraformVM/*.tfstate
+TerraformVM/*.tfstate.*
+TerraformVM/.terraform
+TerraformVM/.terraform.*
