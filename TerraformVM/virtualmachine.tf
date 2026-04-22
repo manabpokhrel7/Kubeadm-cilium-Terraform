@@ -12,7 +12,7 @@ resource "google_compute_instance" "control" {
   name         = "control"
   machine_type = "e2-medium"
   zone         = "us-central1-c"
-  tags = ["ssh-access"]
+  tags = ["ssh-http-https-access"]
   boot_disk {
     initialize_params {
       image = "rocky-linux-cloud/rocky-linux-9"
@@ -32,7 +32,7 @@ resource "google_compute_instance" "worker1" {
   name         = "worker1"
   machine_type = "e2-medium"
   zone         = "us-central1-c"
-  tags = ["ssh-access"]
+  tags = ["ssh-http-https-access"]
   boot_disk {                       
     initialize_params {             
       image = "rocky-linux-cloud/rocky-linux-9"
@@ -51,7 +51,7 @@ resource "google_compute_instance" "worker2" {
   name         = "worker2"
   machine_type = "e2-medium"
   zone         = "us-central1-c"
-  tags = ["ssh-access"]
+  tags = ["ssh-http-https-access"]
   boot_disk {                       
     initialize_params {             
       image = "rocky-linux-cloud/rocky-linux-9"

@@ -92,3 +92,36 @@
       shell: |
         cilium install --version 1.19.3 --set ipam.mode=kubernetes --set kubeProxyReplacement=true
         cilium hubble enable
+
+    - name: Install Openssl
+      dnf:
+        name: openssl
+        state: latest
+
+    - name: Generate certificate authority crt to access it outside the cluster
+      shell: | 
+        cat /etc/kubernetes/pki/ca.crt
+      register: certificate_output
+
+    - name: Copy the module in a localfile
+      delegate_to: localhost
+      become: false
+      copy:
+        content: |
+          {{ certificate_output.stdout }}
+        dest: certificate.crt
+        mode: '0755'      
+
+    - name: Copy the kubeconfig to a VAR
+      shell: |                            
+        cat ~/.kube/config    
+      register: kube_config
+
+    - name: Copy the kubernetes kubeconfig as well
+      delegate_to: localhost
+      become: false
+      copy:
+        content: |
+          {{ kube_config.stdout }}
+        dest: config
+        mode: '0755'
