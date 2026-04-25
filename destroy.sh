@@ -1,4 +1,3 @@
 #!/bin/bash
 cd TerraformVM
-./apply.sh
-
+./destroy.sh
