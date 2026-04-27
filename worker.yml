@@ -19,3 +19,7 @@
       # Add this to prevent joining a cluster you're already in
       args:
         creates: /etc/kubernetes/kubelet.conf
+
+    - name: Create a Persistent Volume location
+      shell: |
+        mkdir -p /mnt/data/ 

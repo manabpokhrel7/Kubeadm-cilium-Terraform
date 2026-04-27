@@ -1,0 +1,13 @@
+- name: Apply the manifest on the control plane
+  hosts: control
+  become: true
+  tasks:
+    - name: Copy the manifest file
+      copy:
+        src: manifests
+        dest: ~/manifests
+
+    - name: Apply the manifest file
+      shell: | 
+        kubectl apply -f ~/manifests/namespace.yaml
+        kubectl apply -f ~/manifests/*

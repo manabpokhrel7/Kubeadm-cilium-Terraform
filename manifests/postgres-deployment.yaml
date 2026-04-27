@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-deployment
+  namespace: database
+spec:
+  serviceName: postgres-service      # REQUIRED FOR STATEFULSET
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          ports:
+            - containerPort: 5432
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+            - secretRef:
+                name: postgres-secret
+          volumeMounts: #If you need custom SQL config
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+      #       - name: postgres-init
+      #         mountPath: /docker-entrypoint-initdb.d
+      # volumes: #Temporary Volume
+      #   - name: postgres-init
+      #     configMap:
+      #       name: postgres-init
+  volumeClaimTemplates: #Permanent and persistent Volumes
+    - metadata:
+        name: postgres-data
+      spec:
+        storageClassName: manual
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi

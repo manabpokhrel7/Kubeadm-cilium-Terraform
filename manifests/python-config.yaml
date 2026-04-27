@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: python-config
+  namespace: react
+data:
+  DB_HOST: postgres-service.database.svc.cluster.local
+  DB_USER: "postgres"
+  DB_NAME: "amldb"
