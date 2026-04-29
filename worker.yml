@@ -20,6 +20,6 @@
       args:
         creates: /etc/kubernetes/kubelet.conf
 
-    - name: Create a Persistent Volume location
+    - name: Create a Persistent Volume location for kubernetes stateful apps we also created a persistenvolume.yaml file to mount to this location
       shell: |
         mkdir -p /mnt/data/ 

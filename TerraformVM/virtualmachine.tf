@@ -11,7 +11,7 @@ resource "google_compute_instance" "control" {
 #   for_each = local.nodes
   name         = "control"
   machine_type = "e2-medium"
-  zone         = "us-central1-c"
+  zone         = "us-central1-a"
   tags = ["ssh-http-https-access"]
   boot_disk {
     initialize_params {
@@ -31,7 +31,7 @@ resource "google_compute_instance" "worker1" {
 #   for_each = local.nodes
   name         = "worker1"
   machine_type = "e2-medium"
-  zone         = "us-central1-c"
+  zone         = "us-central1-a"
   tags = ["ssh-http-https-access"]
   boot_disk {                       
     initialize_params {             
@@ -50,7 +50,7 @@ resource "google_compute_instance" "worker2" {
 #   for_each = local.nodes
   name         = "worker2"
   machine_type = "e2-medium"
-  zone         = "us-central1-c"
+  zone         = "us-central1-a"
   tags = ["ssh-http-https-access"]
   boot_disk {                       
     initialize_params {             
