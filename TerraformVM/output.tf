@@ -7,3 +7,6 @@ output "worker1_public_ip" {
 output "worker2_public_ip" {
   value = google_compute_instance.worker2.network_interface[0].access_config[0].nat_ip
 }
+output "load_balancer_ip" {
+  value = google_compute_global_address.lb_ip.address
+}

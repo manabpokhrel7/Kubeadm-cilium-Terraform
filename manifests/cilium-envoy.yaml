@@ -1,0 +1,60 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: nodeport-gateway-class
+spec:
+  controllerName: io.cilium/gateway-controller
+  description: The default Cilium GatewayClass
+  parametersRef:
+    group: cilium.io
+    kind: CiliumGatewayClassConfig
+    name: nodeport-gateway-config
+    namespace: default
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumGatewayClassConfig
+metadata:
+  name: nodeport-gateway-config
+  namespace: default
+spec:
+  service:
+    type: NodePort #We have opened port 30080 nodeport in our VMS and it autolistens to that because it is configured to listen to nodeport and nodeport range is 30000–32767 and 30080 is inside that. So even if we set our VMs traffic to another random port .i.e 1000 and allow traffic there and we configure it like this the gateway wont listen since this isnt in the range of node port.
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: nodeport-gateway
+spec:
+  gatewayClassName: nodeport-gateway-class
+  listeners:
+  - protocol: HTTP
+    port: 80
+    name: web-gw
+    allowedRoutes:
+      namespaces:
+        from: Same
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: http-app
+spec:
+  parentRefs:
+  - name: nodeport-gateway
+    namespace: default
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: react-service
+      port: 80
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /api
+    backendRefs:
+    - name: python-service
+      port: 8000
