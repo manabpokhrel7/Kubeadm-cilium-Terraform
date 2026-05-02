@@ -1,4 +1,4 @@
-control_public_ip = "34.10.138.255"
+control_public_ip = "34.132.37.140"
 load_balancer_ip = "34.54.247.132"
-worker1_public_ip = "34.136.225.119"
-worker2_public_ip = "34.41.220.71"
+worker1_public_ip = "34.170.21.93"
+worker2_public_ip = "35.193.126.173"

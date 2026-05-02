@@ -4,7 +4,7 @@ resource "google_compute_firewall" "allow_my_ssh" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22" , "80", "443", "6443", "8080"]
+    ports    = ["22" , "80", "443", "6443", "8080", "30080"]
   }
 
   source_ranges = ["0.0.0.0/0"]  # allow from anywhere (you can restrict later)

@@ -4,8 +4,8 @@ kind: GatewayClass
 metadata:
   name: nodeport-gateway-class
 spec:
-  controllerName: io.cilium/gateway-controller
-  description: The default Cilium GatewayClass
+  controllerName: gateway.envoyproxy.io/gatewayclass-controller
+  description: Envoy GatewayClass
   parametersRef:
     group: cilium.io
     kind: CiliumGatewayClassConfig
