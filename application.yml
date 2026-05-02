@@ -9,5 +9,4 @@
 
     - name: Apply the manifest file
       shell: | 
-        kubectl apply -f ~/manifests/namespace.yaml
-        kubectl apply -f ~/manifests/*
+        kubectl apply -f ~/manifests/manifests/

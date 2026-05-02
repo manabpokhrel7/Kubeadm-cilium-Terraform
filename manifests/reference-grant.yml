@@ -1,14 +1,17 @@
-apiVersion: gateway.networking.k8s.io/v1
+apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
   name: envoy-reference-grant
   namespace: react
 spec:
   from:
-  - group: gateway.networking.k8s.io
-    kind: HTTPRoute
-    namespace: default
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      namespace: default
   to:
-  - group: v1
-    kind: Service
-    namespace: react
+    - group: ""
+      kind: Service
+      name: react-service
+    - group: ""
+      kind: Service
+      name: python-service
