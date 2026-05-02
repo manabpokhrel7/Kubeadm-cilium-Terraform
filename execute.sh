@@ -6,3 +6,4 @@ cd TerraformVM
 cd ../
 ansible-playbook cilium-config.yml
 ansible-playbook application.yml 
+ansible-playbook hubble-cli.yml

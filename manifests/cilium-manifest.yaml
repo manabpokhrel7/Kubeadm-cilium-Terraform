@@ -1,0 +1,95 @@
+#---
+#apiVersion: gateway.networking.k8s.io/v1
+#kind: GatewayClass
+#metadata:
+#  name: nodeport-gateway-class
+#spec:
+#  controllerName: gateway.envoyproxy.io/gatewayclass-controller
+#  description: Envoy GatewayClass
+#  parametersRef:
+#    group: cilium.io
+#    kind: CiliumGatewayClassConfig
+#    name: nodeport-gateway-config
+#    namespace: default
+#---
+#apiVersion: cilium.io/v2alpha1
+#kind: CiliumGatewayClassConfig
+#metadata:
+#  name: nodeport-gateway-config
+#  namespace: default
+#spec:
+#  service:
+#    type: NodePort #We have opened port 30080 nodeport in our VMS and it autolistens to that because it is configured to listen to nodeport and nodeport range is 30000–32767 and 30080 is inside that. So even if we set our VMs traffic to another random port .i.e 1000 and allow traffic there and we configure it like this the gateway wont listen since this isnt in the range of node port.
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: nodeport-config
+  namespace: envoy-gateway-system
+spec:
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyService:
+        type: NodePort
+        patch:
+          value:
+            spec:
+              ports:
+                - name: http
+                  port: 80
+                  targetPort: 10080
+                  nodePort: 30080
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: example-gateway-class
+spec:
+  controllerName: gateway.envoyproxy.io/gatewayclass-controller
+  parametersRef:
+    group: gateway.envoyproxy.io
+    kind: EnvoyProxy
+    name: nodeport-config
+    namespace: envoy-gateway-system
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: example-gateway
+  namespace: default
+spec:
+  gatewayClassName: example-gateway-class
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Same
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: app-route
+  namespace: default
+spec:
+  parentRefs:
+    - name: example-gateway
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api
+      backendRefs:
+        - name: python-service
+          namespace: react
+          port: 8000
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: react-service
+          namespace: react
+          port: 80
