@@ -41,4 +41,8 @@ spec:
             configMapKeyRef:
               name: python-config
               key: DB_NAME
-
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: python-config
+              key: REDIS_HOST

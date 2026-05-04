@@ -11,4 +11,10 @@ metadata:
   name: database
   labels:
     name: database
-
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: redis
+  labels:
+    name: redis

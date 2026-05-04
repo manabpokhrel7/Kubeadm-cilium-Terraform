@@ -7,3 +7,4 @@ data:
   DB_HOST: postgres-service.database.svc.cluster.local
   DB_USER: "postgres"
   DB_NAME: "amldb"
+  REDIS_HOST: redis-service.redis.svc.cluster.local

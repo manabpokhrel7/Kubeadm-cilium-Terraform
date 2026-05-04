@@ -29,6 +29,14 @@ spec:
   provider:
     type: Kubernetes
     kubernetes:
+      envoyDaemonSet:
+        patch:
+          value:
+            spec:
+              template:
+                spec:
+                  nodeSelector:
+                    kubernetes.io/os: linux
       envoyService:
         type: NodePort
         patch:
@@ -73,6 +81,8 @@ metadata:
   name: app-route
   namespace: default
 spec:
+  hostnames:
+    - kubernetes.manabpokhrel.com.np
   parentRefs:
     - name: example-gateway
   rules:

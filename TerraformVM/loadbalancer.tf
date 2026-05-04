@@ -4,10 +4,20 @@ resource "google_compute_global_forwarding_rule" "http" {
   target     = google_compute_target_http_proxy.http.id
   ip_address = google_compute_global_address.lb_ip.address
 }
-
+resource "google_compute_global_forwarding_rule" "https" {
+  name       = "kubernetes-https-rule"
+  port_range = "443"
+  target     = google_compute_target_https_proxy.https.id
+  ip_address = google_compute_global_address.lb_ip.address
+}
 resource "google_compute_target_http_proxy" "http" {
   name    = "kubernetes-http-proxy"
   url_map = google_compute_url_map.main.id
+}
+resource "google_compute_target_https_proxy" "https" {
+  name             = "kubernetes-https-proxy"
+  url_map          = google_compute_url_map.main.id
+  ssl_certificates = [google_compute_managed_ssl_certificate.kubernetes_cert.id]
 }
 
 resource "google_compute_url_map" "main" {
@@ -33,7 +43,7 @@ resource "google_compute_backend_service" "kubernetes" {
   name                  = "kubernetes-backend"
   protocol              = "HTTP"
   load_balancing_scheme = "EXTERNAL_MANAGED"
-
+  port_name             = "http"
   backend {
     group = google_compute_instance_group.k8s_workers.self_link
   }
@@ -48,6 +58,7 @@ resource "google_compute_health_check" "k8s" {
   http_health_check {
     port         = 30080
     request_path = "/"
+    host         = "kubernetes.manabpokhrel.com.np"
   }
 }
 resource "google_compute_global_address" "lb_ip" {
