@@ -29,6 +29,8 @@
         - 6443/tcp
         - 10250/tcp
         - 30080/tcp #Required for cilium envoy we are using to route traffic
+        - 9090/tcp #for prometheus
+        - 3000/tcp #For grafana
 
     - name: Enable networking on kubernetes
       shell: |

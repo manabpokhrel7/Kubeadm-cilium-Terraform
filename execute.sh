@@ -8,3 +8,4 @@ cd ../
 ansible-playbook cilium-config.yml
 ansible-playbook application.yml 
 ansible-playbook hubble-cli.yml
+ansible-playbook prometheus-stack.yml
