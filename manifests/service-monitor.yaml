@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    release: kube-prometheus-stack
+  name: prometheus-service-monitor
+  namespace: kube-prometheus-stack
+spec:
+  endpoints:
+  - interval: 30s
+    targetPort: 8000
+    path: /metrics
+  namespaceSelector:
+    matchNames:
+    - react
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "python-service"
+  endpoints:
+    - port: http-metrics
+      path: /metrics
+      interval: 30s

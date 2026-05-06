@@ -1,0 +1,8 @@
+- name: Installing ECK(Elastic Cloud on Kubernetes)
+  hosts: control
+  become: true
+  tasks:
+    - name: Installing the required CRDs and install ECK operator
+      shell: |
+        kubectl create -f https://download.elastic.co/downloads/eck/3.4.0/crds.yaml
+        kubectl apply -f https://download.elastic.co/downloads/eck/3.4.0/operator.yaml

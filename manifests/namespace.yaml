@@ -18,3 +18,10 @@ metadata:
   name: redis
   labels:
     name: redis
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-prometheus-stack
+  labels:
+    name: kube-prometheus-stack

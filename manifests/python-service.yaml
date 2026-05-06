@@ -3,10 +3,13 @@ kind: Service
 metadata:
   name: python-service
   namespace: react
+  labels:
+    app.kubernetes.io/name: "python-service"
 spec:
   selector:
     app: python
   ports:
-    - port: 8000
+    - name: http-metrics
+      port: 8000
       targetPort: 8000
   type: ClusterIP
