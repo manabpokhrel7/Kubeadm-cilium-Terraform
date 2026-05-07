@@ -1,4 +1,4 @@
-- name: Installing Cilium envoy
+- name: Installing Prometheus stack
   hosts: control
   become: true
   tasks:

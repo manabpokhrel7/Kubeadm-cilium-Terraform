@@ -10,7 +10,7 @@
 resource "google_compute_instance" "control" {
 #   for_each = local.nodes
   name         = "control"
-  machine_type = "e2-medium"
+  machine_type = "e2-standard-2"
   zone         = "us-central1-a"
   tags = ["ssh-http-https-access"]
   boot_disk {
@@ -30,7 +30,7 @@ resource "google_compute_instance" "control" {
 resource "google_compute_instance" "worker1" {
 #   for_each = local.nodes
   name         = "worker1"
-  machine_type = "e2-medium"
+  machine_type = "e2-standard-4"
   zone         = "us-central1-a"
   tags = ["ssh-http-https-access"]
   boot_disk {                       
@@ -49,7 +49,7 @@ resource "google_compute_instance" "worker1" {
 resource "google_compute_instance" "worker2" {
 #   for_each = local.nodes
   name         = "worker2"
-  machine_type = "e2-medium"
+  machine_type = "e2-standard-4"
   zone         = "us-central1-a"
   tags = ["ssh-http-https-access"]
   boot_disk {                       

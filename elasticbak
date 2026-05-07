@@ -6,3 +6,7 @@
       shell: |
         kubectl create -f https://download.elastic.co/downloads/eck/3.4.0/crds.yaml
         kubectl apply -f https://download.elastic.co/downloads/eck/3.4.0/operator.yaml
+
+    - name: Installing the required storage class with local-path provisioner which is required for persistentvolumeclaims for the elastic pods
+      shell: |
+        kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml

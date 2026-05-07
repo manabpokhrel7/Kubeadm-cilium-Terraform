@@ -1,0 +1,9 @@
+- name: Installing ECK(Elastic Cloud on Kubernetes)
+  hosts: control
+  become: true
+  tasks:
+    - name: Copying the helm charts 
+      copy:
+        src: ELK-Stack
+        dest: . 
+
