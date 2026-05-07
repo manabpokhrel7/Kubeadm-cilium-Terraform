@@ -1,0 +1,16 @@
+- name: Small minor configs
+  become: yes
+  hosts: all
+  tasks:
+    - name: Enable ELK firewall ports
+      ansible.posix.firewalld:
+        port: "{{ item }}"
+        permanent: true
+        immediate: true
+        state: enabled
+      loop:
+        - 9200/tcp   # Elasticsearch API
+        - 9300/tcp   # Elasticsearch cluster communication
+        - 5601/tcp   # Kibana UI
+        - 5044/tcp   # Filebeat -> Logstash
+        - 9600/tcp   # Logstash monitoring API

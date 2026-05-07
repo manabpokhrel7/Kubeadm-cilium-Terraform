@@ -8,6 +8,5 @@ cd ../
 ansible-playbook cilium-config.yml
 ansible-playbook hubble-cli.yml
 ansible-playbook prometheus-stack.yml
-#ansible-playbook elastic-cloud.yml
 ansible-playbook application.yml 
 ansible-playbook elk-stack.yml

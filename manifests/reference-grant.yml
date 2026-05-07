@@ -33,3 +33,5 @@ spec:
     - group: ""
       kind: Service
       name: kube-prometheus-stack-prometheus
+
+

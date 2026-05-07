@@ -7,3 +7,9 @@
         src: ELK-Stack
         dest: . 
 
+    - name: Helm install ELK helm charts
+      shell: |
+        cd ELK-Stack 
+        helm upgrade --install logstash ./logstash
+        helm upgrade --install filebeat ./filebeat
+        helm upgrade --install elasticsearch ./elasticsearch

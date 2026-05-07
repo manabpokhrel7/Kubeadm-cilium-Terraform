@@ -121,3 +121,23 @@ spec:
         - name: kube-prometheus-stack-grafana
           namespace: kube-prometheus-stack
           port: 80
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: kibana-route
+  namespace: default
+spec:
+  hostnames:
+    - kibana.manabpokhrel.com.np
+  parentRefs:
+    - name: example-gateway
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: kibana-kibana
+          namespace: default
+          port: 5601

@@ -31,6 +31,11 @@
         - 30080/tcp #Required for cilium envoy we are using to route traffic
         - 9090/tcp #for prometheus
         - 3000/tcp #For grafana
+        - 9200/tcp   # Elasticsearch API
+        - 9300/tcp   # Elasticsearch cluster communication
+        - 5601/tcp   # Kibana UI
+        - 5044/tcp   # Filebeat -> Logstash
+        - 9600/tcp   # Logstash monitoring API
 
     - name: Enable networking on kubernetes
       shell: |
