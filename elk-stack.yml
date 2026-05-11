@@ -9,7 +9,9 @@
 
     - name: Helm install ELK helm charts
       shell: |
+        kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
         cd ELK-Stack 
         helm upgrade --install logstash ./logstash
         helm upgrade --install filebeat ./filebeat
         helm upgrade --install elasticsearch ./elasticsearch
+        helm upgrade --install kibana ./kibana
