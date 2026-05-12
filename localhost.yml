@@ -1,5 +1,6 @@
 - name: Setting up the control plane
   hosts: localhost
+  become: false
   tasks:
     - name: Push the secrets to gcp secret manager
       shell: |
