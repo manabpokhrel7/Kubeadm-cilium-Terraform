@@ -1,0 +1,6 @@
+- name: Setting up the control plane
+  hosts: localhost
+  tasks:
+    - name: Push the secrets to gcp secret manager
+      shell: |
+        gcloud secrets versions add secret --data-file=config

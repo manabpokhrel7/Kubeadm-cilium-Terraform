@@ -13,7 +13,7 @@ jobs:
 
       - uses: 'google-github-actions/auth@v3'
         with:
-          service_account: 'manab-sa'
+          service_account: 'manab-sa@my-personal-terraform.iam.gserviceaccount.com'
           project_id: 'my-personal-terraform'
           workload_identity_provider: 'projects/321421932512/locations/global/workloadIdentityPools/kubeadm-github/providers/kubeadm-repo'
 
@@ -22,8 +22,10 @@ jobs:
           version: 'latest' # default is latest stable
         id: install
 
-      - name: Copy the kubecontext from the Control VM
-        run: gcloud compute scp --recurse control:~/.kube/config ~/.kube/config --zone=us-central1-a
+      - uses: google-github-actions/setup-gcloud@v3
 
-      - name: Verify the file
-        run: cat ~/.kube/config
+      - name: Get kubeconfig from Secret Manager
+        run: |
+          mkdir -p ~/.kube
+          gcloud secrets versions access latest --secret="secret" > ~/.kube/config
+          chmod 600 ~/.kube/config
