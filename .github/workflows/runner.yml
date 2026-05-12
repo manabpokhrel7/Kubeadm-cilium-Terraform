@@ -11,5 +11,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v6
 
-      - name: testing actions
-        run: ls -ltra
+      - uses: 'google-github-actions/auth@v3'
+        with:
+          service_account: 'manab-sa'
+          workload_identity_provider: 'projects/321421932512/locations/global/workloadIdentityPools/kubeadm-github/providers/kubeadm-repo'
+
