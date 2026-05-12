@@ -6,6 +6,10 @@
 # 	}
 # }
 
+resource "google_compute_address" "control_ip" {
+  name   = "control-plane-ip"
+  region = "us-central1"
+}
 
 resource "google_compute_instance" "control" {
 #   for_each = local.nodes
@@ -20,7 +24,9 @@ resource "google_compute_instance" "control" {
   }
   network_interface {
     network       = "default"
-    access_config {}  # gives public IP
+    access_config {
+      nat_ip = google_compute_address.control_ip.address
+    }  # gives public IP
   }
   metadata = {
     ssh-keys = "manabpokhrel7:${var.ssh_public_key}"

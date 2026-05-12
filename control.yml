@@ -13,6 +13,8 @@
         --pod-network-cidr=10.200.0.0/16 
         --apiserver-advertise-address={{ ansible_default_ipv4.address }} 
         --skip-phases=addon/kube-proxy
+        --control-plane-endpoint=api.kubernetes.manabpokhrel.com.np:6443
+        --apiserver-cert-extra-sans=api.kubernetes.manabpokhrel.com.np,34.61.109.254
       register: kubeadm_output
       args:
         creates: /etc/kubernetes/admin.conf
