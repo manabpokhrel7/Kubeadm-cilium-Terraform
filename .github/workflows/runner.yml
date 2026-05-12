@@ -14,5 +14,6 @@ jobs:
       - uses: 'google-github-actions/auth@v3'
         with:
           service_account: 'manab-sa'
+          project_id: 'my-personal-terraform'
           workload_identity_provider: 'projects/321421932512/locations/global/workloadIdentityPools/kubeadm-github/providers/kubeadm-repo'
 
