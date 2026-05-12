@@ -29,3 +29,6 @@ jobs:
           mkdir -p ~/.kube
           gcloud secrets versions access latest --secret="secret" > ~/.kube/config
           chmod 600 ~/.kube/config
+
+      - name: Test kubectl
+        run: kubectl get pods
