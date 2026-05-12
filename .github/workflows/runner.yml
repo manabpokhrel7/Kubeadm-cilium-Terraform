@@ -30,5 +30,10 @@ jobs:
           gcloud secrets versions access latest --secret="secret" > ~/.kube/config
           chmod 600 ~/.kube/config
 
-      - name: Test kubectl
-        run: kubectl get pods
+      - name: Deploy Argocd
+        run: |
+          kubectl apply -f manifests/namespace.yaml
+          kubectl apply -f argocd/install/install.yaml -n argocd
+          echo "ArgoCD deployed successfully!"
+          kubectl wait --for=condition=Ready pods -n argocd --all --timeout=120s
+          kubectl apply -f argocd/application/application.yaml -n argocd

@@ -25,3 +25,8 @@ metadata:
   name: kube-prometheus-stack
   labels:
     name: kube-prometheus-stack
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argocd
