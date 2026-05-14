@@ -1,3 +1,4 @@
+#Traffic Flow at the bottom
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyProxy
 metadata:
@@ -22,9 +23,9 @@ spec:
             spec:
               ports:
                 - name: http
-                  port: 80
-                  targetPort: 10080
-                  nodePort: 30080
+                  port: 80 #Kubernetes Service Port for Envoy recieves traffic here
+                  targetPort: 10080 #The Envoy container listens here by default
+                  nodePort: 30080 #The worker nodeport where the traffic is recieved from GCP https lb
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
@@ -141,3 +142,21 @@ spec:
         - name: kibana-kibana
           namespace: default
           port: 5601
+#Traffic Flow
+#User
+#↓
+#GCP HTTPS Load Balancer :443
+#↓
+#Worker Node :30080
+#(NodePort)
+#↓
+#Kubernetes Service (envoyService)
+#port: 80
+#↓
+#targetPort: 10080
+#↓
+#Envoy Pod container listening on 10080
+#↓
+#Gateway API routes traffic
+#↓
+#Backend services/pods

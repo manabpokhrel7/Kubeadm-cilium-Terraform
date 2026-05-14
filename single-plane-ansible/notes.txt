@@ -1,0 +1,15 @@
+This ansible configuration is for single control plane cluster
+apply 
+automation-setup.yml - Setups basic in all nodes
+control.yml - Setups and initializes the control plane
+woker.yml - Setups worker nodes and joins them to the control plane
+cilium-config.yml - Configures the cilium CNF
+hubble-cli.yml - Activaes hubble observability
+prometheus-stack.yml - Setups Prometheus Stack
+elk-stack.yml - Setups ELK stack with helm
+In this order
+
+
+and in the image of dns.png
+api.kubernetes is pointing to the control plane public ip
+while others are to worker nodes public ip through a loadbalancer ip

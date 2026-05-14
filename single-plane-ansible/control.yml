@@ -1,17 +1,11 @@
-- name: Setting up the first control plane
-  hosts: control[0]
+- name: Setting up the control plane
+  hosts: control
   become: true
   tasks:
     - name: Update the cache
       ansible.builtin.dnf:
         name: "*"
         state: latest
-
-    - name: Map the HA domain directly to control0 internal IP during setup
-      ansible.builtin.lineinfile:
-        path: /etc/hosts
-        line: "{{ ansible_default_ipv4.address }} api.kubernetes.manabpokhrel.com.np"
-        state: present
 
     - name: Initialize the control plane
       ansible.builtin.shell: >
@@ -20,8 +14,7 @@
         --apiserver-advertise-address={{ ansible_default_ipv4.address }} 
         --skip-phases=addon/kube-proxy
         --control-plane-endpoint=api.kubernetes.manabpokhrel.com.np:6443
-        --apiserver-cert-extra-sans=api.kubernetes.manabpokhrel.com.np,104.197.182.185
-        --upload-certs
+        --apiserver-cert-extra-sans=api.kubernetes.manabpokhrel.com.np,34.61.109.254
       register: kubeadm_output
       args:
         creates: /etc/kubernetes/admin.conf
@@ -63,24 +56,6 @@
           #!/bin/bash 
           {{ join_command.stdout }}
         dest: join.sh
-        mode: '0755'
-
-    - name: Fetch the active certificate decryption key from the cluster
-      ansible.builtin.shell: kubeadm init phase upload-certs --upload-certs
-      register: upload_certs_output
-
-    - name: Parse certificate key from the output
-      ansible.builtin.set_fact:
-        extracted_cert_key: "{{ upload_certs_output.stdout_lines[-1] | trim }}"
-
-    - name: Print the control join command
-      delegate_to: localhost
-      become: false
-      copy:
-        content: |
-          #!/bin/bash 
-          {{ join_command.stdout }} --control-plane --certificate-key {{ extracted_cert_key }}
-        dest: control_join.sh
         mode: '0755'
 
     - name: Wait for kube-apiserver to be ready
@@ -125,45 +100,30 @@
         name: openssl
         state: latest
 
-    - name: Remove the temporary host override to switch control0 back to the Load Balancer
-      ansible.builtin.lineinfile:
-        path: /etc/hosts
-        line: "{{ ansible_default_ipv4.address }} api.kubernetes.manabpokhrel.com.np"
-        state: absent
+    - name: Generate certificate authority crt to access it outside the cluster
+      shell: | 
+        cat /etc/kubernetes/pki/ca.crt
+      register: certificate_output
 
-
-#Setting up other control planes
-- name: Setting up the control plane
-  hosts: control[1],control[2]
-  become: true
-  tasks:
-    - name: Update the cache
-      ansible.builtin.dnf:
-        name: "*"
-        state: latest
-
-    - name: Temporarily point the HA domain directly to control0 private IP
-      ansible.builtin.lineinfile:
-        path: /etc/hosts
-        # Replace 10.0.0.10 with the actual private IP of your control[0] node
-        line: "{{ hostvars[groups['control'][0]]['ansible_default_ipv4']['address'] }} api.kubernetes.manabpokhrel.com.np"
-        state: present
-
-    - name: Copy the control join script
-      ansible.builtin.copy:
-        src: control_join.sh
-        dest: /tmp/control_join.sh
+    - name: Copy the module in a localfile
+      delegate_to: localhost
       become: false
+      copy:
+        content: |
+          {{ certificate_output.stdout }}
+        dest: certificate.crt
+        mode: '0755'      
 
-    - name: Execute the control join command
-      ansible.builtin.shell: sh /tmp/control_join.sh
-      become: true
-      # Add this to prevent joining a cluster you're already in
-      args:
-        creates: /etc/kubernetes/kubelet.conf
+    - name: Copy the kubeconfig to a VAR
+      shell: |                            
+        cat ~/.kube/config    
+      register: kube_config
 
-    - name: Remove the temporary host override to resume using the Load Balancer
-      ansible.builtin.lineinfile:
-        path: /etc/hosts
-        line: "{{ hostvars[groups['control'][0]]['ansible_default_ipv4']['address'] }} api.kubernetes.manabpokhrel.com.np"
-        state: absent
+    - name: Copy the kubernetes kubeconfig as well
+      delegate_to: localhost
+      become: false
+      copy:
+        content: |
+          {{ kube_config.stdout }}
+        dest: config
+        mode: '0755'

@@ -1,3 +1,5 @@
+#This lb is used to point the users traffic to the worker nodes
+
 resource "google_compute_global_forwarding_rule" "http" {
   name       = "kubernetes-http-rule"
   port_range = "80"
