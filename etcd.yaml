@@ -1,0 +1,6 @@
+- name: Back up ETCD and certs
+  hosts: control[0]
+  become: true
+  tasks:
+    - name: Backup the certs
+      shell: |
