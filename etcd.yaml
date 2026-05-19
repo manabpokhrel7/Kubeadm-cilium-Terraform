@@ -2,5 +2,28 @@
   hosts: control[0]
   become: true
   tasks:
-    - name: Backup the certs
-      shell: |
+    - name: Backup the etcd database
+      ansible.builtin.shell: |
+        kubectl exec -n kube-system etcd-control1 -- etcdctl snapshot save /var/lib/etcd/etcd-snapshot.db \
+        --endpoints=https://127.0.0.1:2379 \
+        --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+        --cert=/etc/kubernetes/pki/etcd/server.crt \
+        --key=/etc/kubernetes/pki/etcd/server.key
+        mv /var/lib/etcd/etcd-snapshot.db /tmp/etcd-snapshot.db
+      changed_when: true
+
+    - name: Backup the certs as well
+      ansible.builtin.shell: tar -cf /tmp/certs.tar /etc/kubernetes/pki
+      changed_when: true
+
+    - name: Copy the cert files to localhost for testing
+      ansible.builtin.fetch:
+        src: /tmp/certs.tar
+        dest: backup/certs.tar
+        flat: yes
+
+    - name: Copy the etcd files to localhost for testing
+      ansible.builtin.fetch:
+        src: /tmp/etcd-snapshot.db
+        dest: backup/etcd-snapshot.db
+        flat: yes

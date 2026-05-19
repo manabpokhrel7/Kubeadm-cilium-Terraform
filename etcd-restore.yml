@@ -1,0 +1,35 @@
+- name: Back up ETCD and certs
+  hosts: control
+  become: true
+  tasks:
+    - name: Copy files from local to remote
+      copy:
+        src: backup
+        dest: /
+
+    - name: Stop kubelet
+      systemd:
+        name: kubelet
+        state: stopped
+
+    - name: Restore the etcd
+      shell: |
+        ETCD_VER=v3.6.5
+        curl -LO https://github.com/etcd-io/etcd/releases/download/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz
+        tar xzvf etcd-${ETCD_VER}-linux-amd64.tar.gz
+        cd etcd-${ETCD_VER}-linux-amd64
+        mv etcdutl /usr/local/bin/
+        mv etcdctl /usr/local/bin/
+        etcdutl snapshot restore /backup/etcd-snapshot.db --data-dir /var/lib/etcd
+        mkdir certbak
+        tar -xf /backup/certs.tar -C certbak
+        rm -rf /etc/kubernetes/pki/etcd/
+        cp -r certbak/etc/kubernetes/pki/etcd /etc/kubernetes/pki/
+
+    - name: Start kubelet
+      systemd:
+        name: kubelet
+        state: started
+
+
+
