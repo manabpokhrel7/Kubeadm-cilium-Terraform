@@ -32,7 +32,7 @@ jobs:
 
       - name: Deploy Argocd
         run: |
-          kubectl apply -f manifests/namespace.yaml
+          kubectl apply -f manifests/namespace.yaml --validate=false
           kubectl apply -f argocd/install/install.yaml -n argocd
           echo "ArgoCD deployed successfully!"
           kubectl wait --for=condition=Ready pods -n argocd --all --timeout=120s
