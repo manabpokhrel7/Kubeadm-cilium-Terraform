@@ -182,6 +182,13 @@
         line: "{{ hostvars[groups['control'][0]]['ansible_default_ipv4']['address'] }} api.kubernetes.manabpokhrel.com.np"
         state: absent
 
+    - name: Enable kubectl for normal access
+      become: false
+      shell: |
+        mkdir -p $HOME/.kube
+        sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
+        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
 - name: Installing Cilium Cli
   hosts: control
   become: true

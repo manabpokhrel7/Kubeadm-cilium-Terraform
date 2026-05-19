@@ -1,16 +1,12 @@
 - name: Small minor configs
   become: yes
-  hosts: all
+  hosts: control[1],control[2]
   tasks:
-    - name: Enable ELK firewall ports
-      ansible.posix.firewalld:
-        port: "{{ item }}"
-        permanent: true
-        immediate: true
-        state: enabled
-      loop:
-        - 9200/tcp   # Elasticsearch API
-        - 9300/tcp   # Elasticsearch cluster communication
-        - 5601/tcp   # Kibana UI
-        - 5044/tcp   # Filebeat -> Logstash
-        - 9600/tcp   # Logstash monitoring API
+    - name: Enable kubectl for normal access
+      become: false
+      shell: | 
+        mkdir -p $HOME/.kube
+        sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
+        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+          
+        

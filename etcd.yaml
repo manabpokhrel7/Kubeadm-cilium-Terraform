@@ -1,10 +1,10 @@
 - name: Back up ETCD and certs
-  hosts: control[0]
+  hosts: control[1]
   become: true
   tasks:
     - name: Backup the etcd database
       ansible.builtin.shell: |
-        kubectl exec -n kube-system etcd-control1 -- etcdctl snapshot save /var/lib/etcd/etcd-snapshot.db \
+        kubectl exec -n kube-system etcd-control2 -- etcdctl snapshot save /var/lib/etcd/etcd-snapshot.db \
         --endpoints=https://127.0.0.1:2379 \
         --cacert=/etc/kubernetes/pki/etcd/ca.crt \
         --cert=/etc/kubernetes/pki/etcd/server.crt \
