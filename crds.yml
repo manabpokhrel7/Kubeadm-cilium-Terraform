@@ -1,0 +1,9 @@
+- name: Apply the CRDS on the control plane using Server-Side Apply
+  hosts: control[0]
+  become: true
+  tasks:
+    - name: Apply the manifest files via Server-Side Apply
+      shell: | 
+        kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/standard-install.yaml --server-side --force-conflicts
+        kubectl apply -f https://github.com/envoyproxy/gateway/releases/download/v1.1.0/install.yaml --server-side --force-conflicts
+        kubectl apply -f https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.73.1/bundle.yaml --server-side --force-conflicts
