@@ -2,6 +2,6 @@
 cd TerraformVM
 rm -rf output.txt
 terraform output > output.txt
-ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa manabpokhrel7@$(awk -F'"' 'NR==9 { print $4 }' output.txt)
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa manabpokhrel7@$(awk -F'"' 'NR==3 { print $4 }' output.txt)
 rm -rf output.txt
 

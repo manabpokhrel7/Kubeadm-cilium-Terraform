@@ -11,14 +11,14 @@ variable "regional_ip"{
 resource "google_compute_address" "control_ip" {
   for_each = toset(var.regional_ip)
   name   = each.value
-  region = "us-central1"
+  region = "us-west1"
 }
 
 resource "google_compute_instance" "control" {
   for_each     = toset(var.control_names)
   name         = each.value
   machine_type = "e2-standard-2"
-  zone         = "us-central1-a"
+  zone         = "us-west1-a"
   tags = ["ssh-http-https-access"]
   boot_disk {
     initialize_params {
@@ -39,8 +39,8 @@ resource "google_compute_instance" "control" {
 resource "google_compute_instance" "worker1" {
 #   for_each = local.nodes
   name         = "worker1"
-  machine_type = "e2-standard-4"
-  zone         = "us-central1-a"
+  machine_type = "e2-standard-2"
+  zone         = "us-west1-a"
   tags = ["ssh-http-https-access"]
   boot_disk {                       
     initialize_params {             
@@ -49,7 +49,7 @@ resource "google_compute_instance" "worker1" {
   }
   network_interface {
     network       = "default"
-    access_config {}  # gives public IP
+#     access_config {}  # gives public IP
   }
   metadata = {
     ssh-keys = "manabpokhrel7:${var.ssh_public_key}"
@@ -58,8 +58,8 @@ resource "google_compute_instance" "worker1" {
 resource "google_compute_instance" "worker2" {
 #   for_each = local.nodes
   name         = "worker2"
-  machine_type = "e2-standard-4"
-  zone         = "us-central1-a"
+  machine_type = "e2-standard-2"
+  zone         = "us-west1-a"
   tags = ["ssh-http-https-access"]
   boot_disk {                       
     initialize_params {             
@@ -68,7 +68,7 @@ resource "google_compute_instance" "worker2" {
   }
   network_interface {
     network       = "default"
-    access_config {}  # gives public IP
+#     access_config {}  # gives public IP
   }
   metadata = {
     ssh-keys = "manabpokhrel7:${var.ssh_public_key}"

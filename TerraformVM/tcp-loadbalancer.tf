@@ -1,11 +1,11 @@
 resource "google_compute_address" "tcp_lb_ip" {
   name   = "control-tcp-ip"
-  region = "us-central1"
+  region = "us-west1"
 }
 
 resource "google_compute_instance_group" "k8s_control_planes" {
   name = "k8s-control-planes"
-  zone = "us-central1-a"
+  zone = "us-west1-a"
 
     instances = [for instance in google_compute_instance.control : instance.self_link]
 
@@ -18,7 +18,7 @@ resource "google_compute_instance_group" "k8s_control_planes" {
 
 resource "google_compute_region_health_check" "k8s_control" {
   name   = "k8s-control-health"
-  region = "us-central1"
+  region = "us-west1"
 
   tcp_health_check {
     port = 6443
@@ -27,7 +27,7 @@ resource "google_compute_region_health_check" "k8s_control" {
 
 resource "google_compute_region_backend_service" "control_plane" {
   name                  = "control-plane-backend"
-  region                = "us-central1"
+  region                = "us-west1"
   protocol              = "TCP"
   load_balancing_scheme = "EXTERNAL"
   health_checks         = [google_compute_region_health_check.k8s_control.id]
@@ -40,7 +40,7 @@ resource "google_compute_region_backend_service" "control_plane" {
 
 resource "google_compute_forwarding_rule" "control" {
   name                  = "kubernetes-control-rule"
-  region                = "us-central1"
+  region                = "us-west1"
   ip_protocol           = "TCP"
   load_balancing_scheme = "EXTERNAL"
   ports                 = ["6443"]

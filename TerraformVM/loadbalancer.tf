@@ -29,7 +29,7 @@ resource "google_compute_url_map" "main" {
 }
 resource "google_compute_instance_group" "k8s_workers" {
   name = "k8s-workers"
-  zone = "us-central1-a"
+  zone = "us-west1-a"
 
   instances = [
     google_compute_instance.worker1.self_link,
