@@ -29,9 +29,9 @@ spec:
   to:
     - group: ""
       kind: Service
-      name: kube-prometheus-stack-grafana
+      name: kube-prometheus-argocd-grafana
     - group: ""
       kind: Service
-      name: kube-prometheus-stack-prometheus
+      name: kube-prometheus-argocd-kub-prometheus
 
 
