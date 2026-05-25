@@ -13,9 +13,9 @@ jobs:
 
       - uses: 'google-github-actions/auth@v3'
         with:
-          service_account: 'manab-sa@project-5cccd6a0-b034-4117-a60.iam.gserviceaccount.com'
-          project_id: 'project-5cccd6a0-b034-4117-a60'
-          workload_identity_provider: 'projects/321421932512/locations/global/workloadIdentityPools/kubeadm-github/providers/kubeadm-repo'
+          service_account: 'manab-sa@kubeadm-public-ip-lab.iam.gserviceaccount.com'
+          project_id: 'kubeadm-public-ip-lab'
+          workload_identity_provider: 'projects/656057285850/locations/global/workloadIdentityPools/kubeadm-github/providers/kubeadm-repo'
 
       - uses: azure/setup-kubectl@v4
         with:
