@@ -1,0 +1,130 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: nodeport-config
+  namespace: envoy-gateway-system
+spec:
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyDaemonSet:
+        patch:
+          value:
+            spec:
+              template:
+                spec:
+                  nodeSelector:
+                    kubernetes.io/os: linux
+      envoyService:
+        type: NodePort
+        patch:
+          value:
+            spec:
+              ports:
+                - name: http
+                  port: 80
+                  targetPort: 10080
+                  nodePort: {{ .Values.envoy.nodePort }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: example-gateway-class
+spec:
+  controllerName: gateway.envoyproxy.io/gatewayclass-controller
+  parametersRef:
+    group: gateway.envoyproxy.io
+    kind: EnvoyProxy
+    name: nodeport-config
+    namespace: envoy-gateway-system
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: example-gateway
+  namespace: default
+spec:
+  gatewayClassName: example-gateway-class
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: All
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: app-route
+  namespace: default
+spec:
+  hostnames:
+    - kubernetes.{{ .Values.baseDomain }}
+  parentRefs:
+    - name: example-gateway
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api
+      backendRefs:
+        - name: python-service
+          namespace: react
+          port: 8000
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: react-service
+          namespace: react
+          port: 80
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: prometheus-route
+  namespace: default
+spec:
+  hostnames:
+    - prometheus.{{ .Values.baseDomain }}
+  parentRefs:
+    - name: example-gateway
+  rules:
+    - backendRefs:
+        - name: kube-prometheus-stack-prometheus
+          namespace: kube-prometheus-stack
+          port: 9090
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: grafana-route
+  namespace: default
+spec:
+  hostnames:
+    - grafana.{{ .Values.baseDomain }}
+  parentRefs:
+    - name: example-gateway
+  rules:
+    - backendRefs:
+        - name: kube-prometheus-stack-grafana
+          namespace: kube-prometheus-stack
+          port: 80
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: kibana-route
+  namespace: default
+spec:
+  hostnames:
+    - kibana.{{ .Values.baseDomain }}
+  parentRefs:
+    - name: example-gateway
+  rules:
+    - backendRefs:
+        - name: kibana-kibana
+          namespace: default
+          port: 5601

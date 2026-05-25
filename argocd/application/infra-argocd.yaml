@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infra-argocd
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/manabpokhrel7/Kubeadm-cilium-Terraform.git'
+    targetRevision: main
+    path: manifests/infra
+#    helm:
+#      valueFiles:
+#        - values.yaml
+#        - env/dev/dev-values.yaml     # optional layered override
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

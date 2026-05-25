@@ -1,0 +1,13 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: l3-rule
+  namespace: react
+spec:
+  endpointSelector:
+    matchLabels:
+      app: python
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app: react

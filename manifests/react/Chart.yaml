@@ -1,0 +1,14 @@
+namespace: react
+
+replicaCount: 3
+
+image:
+  repository: manabpokhrel7/reactjs
+  tag: latest
+  pullPolicy: Always
+
+service:
+  name: react-service
+  type: ClusterIP
+  port: 80
+  targetPort: 80

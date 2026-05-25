@@ -1,0 +1,17 @@
+namespace: database
+
+postgres:
+  image: postgres:15
+  user: postgres
+  database: amldb
+  password: Sujankhadka77$
+
+service:
+  name: postgres-service
+  port: 5432
+
+storage:
+  className: manual
+  size: 5Gi
+
+replicaCount: 1

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: "python-service"
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: python
+  ports:
+    - name: http-metrics
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}

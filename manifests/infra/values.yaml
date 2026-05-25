@@ -1,0 +1,12 @@
+baseDomain: manabpokhrel.com.np
+
+envoy:
+  nodePort: 30080
+
+postgres:
+  storage:
+    size: 5Gi
+    path: /mnt/data
+
+monitoring:
+  interval: 30s
