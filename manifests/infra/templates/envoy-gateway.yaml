@@ -93,7 +93,7 @@ spec:
     - name: example-gateway
   rules:
     - backendRefs:
-        - name: kube-prometheus-stack-prometheus
+        - name: kube-prometheus-argocd-kub-prometheus
           namespace: kube-prometheus-stack
           port: 9090
 ---
@@ -109,7 +109,7 @@ spec:
     - name: example-gateway
   rules:
     - backendRefs:
-        - name: kube-prometheus-stack-grafana
+        - name: kube-prometheus-argocd-grafana
           namespace: kube-prometheus-stack
           port: 80
 ---
