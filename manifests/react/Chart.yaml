@@ -1,14 +1,6 @@
-namespace: react
-
-replicaCount: 3
-
-image:
-  repository: manabpokhrel7/reactjs
-  tag: latest
-  pullPolicy: Always
-
-service:
-  name: react-service
-  type: ClusterIP
-  port: 80
-  targetPort: 80
+apiVersion: v2
+name: react
+description: React frontend Helm chart
+type: application
+version: 0.1.0
+appVersion: "latest"
