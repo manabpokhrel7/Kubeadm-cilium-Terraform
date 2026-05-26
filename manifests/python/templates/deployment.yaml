@@ -47,6 +47,11 @@ spec:
                 configMapKeyRef:
                   name: python-config
                   key: REDIS_HOST
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: python-openai-secret
+                  key: OPENAI_API_KEY
           startupProbe:
             httpGet:
               path: /health # Requires a health endpoint in your FastAPI app
