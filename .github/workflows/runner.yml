@@ -38,6 +38,7 @@ jobs:
           kubectl wait --for=condition=Ready pods -n argocd --all --timeout=120s
           kubectl apply -f argocd/application/infra-argocd.yaml -n argocd
           kubectl apply -f argocd/application/Kube-Prometheus-argocd.yaml -n argocd
+          kubectl apply -f argocd/application/TLS-argocd.yaml -n argocd
           kubectl apply -f argocd/application/react-argocd.yaml -n argocd
           kubectl apply -f argocd/application/redis-argocd.yaml -n argocd
           kubectl apply -f argocd/application/python-argocd.yaml -n argocd

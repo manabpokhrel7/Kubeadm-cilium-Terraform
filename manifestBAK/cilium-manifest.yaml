@@ -15,7 +15,8 @@ spec:
               template:
                 spec:
                   nodeSelector:
-                    kubernetes.io/os: linux
+                    kubernetes.io/os: linux #This block is to fix envoy daemon set to deploy on control plane since
+                    #since they have taint node-role.kubernetes.io/control-plane:NoSchedule
       envoyService:
         type: NodePort
         patch:
