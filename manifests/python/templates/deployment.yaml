@@ -54,19 +54,19 @@ spec:
             failureThreshold: 6
             periodSeconds: 5 # Gives the app up to 30 seconds to connect to DB and start
             # 2. Liveness Probe: Restarts the pod if the app deadlocks or crashes
-            livenessProbe:
-              httpGet:
-                path: /test
-                port: 8000
-              periodSeconds: 15
-              timeoutSeconds: 3
-              failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /test
+              port: 8000
+            periodSeconds: 15
+            timeoutSeconds: 3
+            failureThreshold: 3
             # 3. Readiness Probe: Cuts off traffic if the DB connection drops temporarily
-            readinessProbe:
-              httpGet:
-                path: /test
-                port: 8000
-              periodSeconds: 10
-              timeoutSeconds: 2
-              successThreshold: 1
-              failureThreshold: 2
+          readinessProbe:
+            httpGet:
+              path: /test
+              port: 8000
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 2
