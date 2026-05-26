@@ -4,7 +4,7 @@ metadata:
   name: letsencrypt-production
 spec:
   acme:
-    server: https://letsencrypt.org
+    server: https://acme-v02.api.letsencrypt.org/directory
     email: manabpokhrel7@gmail.com
     privateKeySecretRef:
       name: letsencrypt-production-account-key #This is our creds for CA to prove us to CA
