@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-production
+spec:
+  acme:
+    server: https://letsencrypt.org
+    email: manabpokhrel7@gmail.com
+    privateKeySecretRef:
+      name: letsencrypt-production-account-key #This is our creds for CA to prove us to CA
+    solvers: #This section is how you prove to CA that you own the domain
+    - http01:
+        gatewayHTTPRoute:
+          parentRefs:
+          - name: envoy-gateway
+            namespace: envoy-gateway-system
+#This entire resource tells which is the CA

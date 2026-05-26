@@ -47,6 +47,14 @@ spec:
   gatewayClassName: example-gateway-class
   listeners:
     - name: http
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: manab-tls-cert-secret #Searching for secret placed here by cert-manager
+            #For the private key and decrypts the message
+    - name: http
       protocol: HTTP
       port: 80
       allowedRoutes:
