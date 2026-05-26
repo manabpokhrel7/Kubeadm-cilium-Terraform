@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: 'https://github.com/manabpokhrel7/Kubeadm-cilium-Terraform.git'
     targetRevision: main
-    path: manifests/Worker-cert
+    path: manifests/Worker-Cert
 #    helm:
 #      valueFiles:
 #        - values.yaml
