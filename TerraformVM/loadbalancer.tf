@@ -74,7 +74,7 @@ resource "google_compute_forwarding_rule" "http" {
   port_range            = "80"
   load_balancing_scheme = "EXTERNAL" # Defines it as an L4 Network LB
   backend_service       = google_compute_region_backend_service.k8s_l4_backend.id
-  ip_address            = google_compute_global_address.lb_ip.address
+  ip_address            = google_compute_address.lb_ip.address
 }
 
 # 2. Use a modern Regional Forwarding Rule for Port 443 (HTTPS) - BLIND PASS
@@ -84,7 +84,7 @@ resource "google_compute_forwarding_rule" "https" {
   port_range            = "443"
   load_balancing_scheme = "EXTERNAL" # Defines it as an L4 Network LB
   backend_service       = google_compute_region_backend_service.k8s_l4_backend.id
-  ip_address            = google_compute_global_address.lb_ip.address
+  ip_address            = google_compute_address.lb_ip.address
 }
 resource "google_compute_instance_group" "k8s_workers" {
   name = "k8s-workers"
@@ -109,6 +109,7 @@ resource "google_compute_region_backend_service" "k8s_l4_backend" {
 
   backend {
     group = google_compute_instance_group.k8s_workers.self_link # Reuses your worker instance group
+    balancing_mode = "CONNECTION"
   }
 
   health_checks = [google_compute_region_health_check.l4_tcp_health.id]
@@ -127,6 +128,7 @@ resource "google_compute_region_health_check" "l4_tcp_health" {
 }
 
 # Keep your static IP address block exactly as is
-resource "google_compute_global_address" "lb_ip" {
-  name = "kubernetes-lb-ip"
+resource "google_compute_address" "lb_ip" {
+  name   = "kubernetes-lb-ip"
+  region = "us-west1" # Must match the region of your forwarding rules
 }
