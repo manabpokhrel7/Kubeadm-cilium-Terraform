@@ -7,3 +7,4 @@ TerraformVM/*.tfstate
 TerraformVM/*.tfstate.*
 TerraformVM/.terraform
 TerraformVM/.terraform.*
+cluster-jwks.json

@@ -39,6 +39,8 @@ jobs:
           kubectl apply -f argocd/application/infra-argocd.yaml -n argocd
           kubectl apply -f argocd/application/Kube-Prometheus-argocd.yaml -n argocd
           kubectl apply -f argocd/application/cert-manager.yaml -n argocd
+          kubectl apply -f argocd/application/secret-manager.yaml -n argocd
+          kubectl apply -f argocd/application/secret-manager-second.yaml -n argocd          
           kubectl apply -f argocd/application/certificate.yaml -n argocd
           kubectl apply -f argocd/application/react-argocd.yaml -n argocd
           kubectl apply -f argocd/application/redis-argocd.yaml -n argocd

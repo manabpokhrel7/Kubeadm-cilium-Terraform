@@ -50,7 +50,7 @@ spec:
             - name: OPENAI_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: python-openai-secret
+                  name: openapi-secrets
                   key: OPENAI_API_KEY
           startupProbe:
             httpGet:
