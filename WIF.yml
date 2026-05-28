@@ -36,9 +36,7 @@
       shell: |
         gcloud projects add-iam-policy-binding kubeadm-public-ip-lab \
           --role=roles/secretmanager.secretAccessor \
-          --member="principal://iam.googleapis.com/projects/$(gcloud projects describe kubeadm-public-ip-lab --format='value(projectNumber)')/locations/global/workloadIdentityPools/secret-pool/subject/system:serviceaccount:react:external-secrets"          
+          --member="principal://iam.googleapis.com/projects/$(gcloud projects describe kubeadm-public-ip-lab --format='value(projectNumber)')/locations/global/workloadIdentityPools/secret-pool/subject/system:serviceaccount:react:external-secrets"  \    
           --condition=None
-        
-        
           
         

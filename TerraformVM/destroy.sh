@@ -1,6 +1,6 @@
 #!/bin/bash
 terraform state rm google_compute_address.tcp_lb_ip
 terraform state rm google_compute_address.lb_ip
-terraform destroy --auto-approve -var-file=variables.tfvars
+terraform destroy --auto-approve -var-file=variables.tfvars -lock=false
 rm -rf ../inventory
 
