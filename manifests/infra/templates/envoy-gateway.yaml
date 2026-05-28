@@ -46,7 +46,7 @@ metadata:
 spec:
   gatewayClassName: example-gateway-class
   listeners:
-    - name: http
+    - name: https
       port: 443
       protocol: HTTPS
       tls:
