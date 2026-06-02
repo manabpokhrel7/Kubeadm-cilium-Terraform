@@ -12,6 +12,9 @@ spec:
     chart: cert-manager
     targetRevision: v1.20.2
     helm:
+      values: |
+        config:
+          enableGatewayAPI: true
       parameters:
         - name: installCRDs
           value: 'true'
