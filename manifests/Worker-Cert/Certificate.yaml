@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: manab-platform-cert
-  namespace: envoy-gateway-system
+  namespace: default
 spec:
   # Secret names are always required.
   secretName: manab-tls-cert-secret
