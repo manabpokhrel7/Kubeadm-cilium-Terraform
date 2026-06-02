@@ -43,4 +43,29 @@
           --member="principal://iam.googleapis.com/projects/$(gcloud projects describe kubeadm-public-ip-lab --format='value(projectNumber)')/locations/global/workloadIdentityPools/secret-pool/subject/system:serviceaccount:react:external-secrets"  \    
           --condition=None
           
-        
+#        Pod
+# ↓
+#Kubernetes ServiceAccount
+# ↓
+#JWT issued by Kubernetes
+# ↓
+#External Secrets sends JWT to Google STS
+# ↓
+#Google uses secret-provider2
+# ↓
+#Provider validates:
+#  - issuer
+#  - signature
+#  - audience
+#  - jwks
+# ↓
+#Extracts:
+#  sub=system:serviceaccount:react:external-secrets
+# ↓
+#Looks for IAM permissions
+# ↓
+#Finds Secret Manager Accessor role
+# ↓
+#Issues temporary Google credentials
+# ↓
+#External Secrets accesses Secret Manager
