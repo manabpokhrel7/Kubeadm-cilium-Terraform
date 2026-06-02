@@ -33,14 +33,6 @@
           --quiet
       ignore_errors: true
 
-    - name: Delete WIF pool
-      ansible.builtin.shell: |
-        gcloud iam workload-identity-pools delete {{ pool_id }} \
-          --location=global \
-          --project={{ project_id }} \
-          --quiet
-      ignore_errors: true
-
     - name: Delete local JWKS file
       ansible.builtin.file:
         path: cluster-jwks.json
