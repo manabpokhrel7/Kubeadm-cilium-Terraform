@@ -1,0 +1,59 @@
+---
+- name: Delete Workload Identity Federation resources for Kubernetes
+  hosts: localhost
+  become: false
+  vars:
+    project_id: kubeadm-public-ip-lab
+    pool_id: secret-pool
+    provider_id: secret-provider
+    namespace: react
+    ksa_name: external-secrets
+
+  tasks:
+    - name: Get GCP project number
+      ansible.builtin.shell: |
+        gcloud projects describe {{ project_id }} --format="value(projectNumber)"
+      register: project_number
+      changed_when: false
+
+    - name: Remove Secret Manager IAM binding for Kubernetes ServiceAccount
+      ansible.builtin.shell: |
+        gcloud projects remove-iam-policy-binding {{ project_id }} \
+          --role=roles/secretmanager.secretAccessor \
+          --member="principal://iam.googleapis.com/projects/{{ project_number.stdout }}/locations/global/workloadIdentityPools/{{ pool_id }}/subject/system:serviceaccount:{{ namespace }}:{{ ksa_name }}" \
+          --quiet
+      ignore_errors: true
+
+    - name: Delete WIF provider
+      ansible.builtin.shell: |
+        gcloud iam workload-identity-pools providers delete {{ provider_id }} \
+          --location=global \
+          --workload-identity-pool={{ pool_id }} \
+          --project={{ project_id }} \
+          --quiet
+      ignore_errors: true
+
+    - name: Delete WIF pool
+      ansible.builtin.shell: |
+        gcloud iam workload-identity-pools delete {{ pool_id }} \
+          --location=global \
+          --project={{ project_id }} \
+          --quiet
+      ignore_errors: true
+
+    - name: Delete local JWKS file
+      ansible.builtin.file:
+        path: cluster-jwks.json
+        state: absent
+
+    - name: Verify WIF pools
+      ansible.builtin.shell: |
+        gcloud iam workload-identity-pools list \
+          --location=global \
+          --project={{ project_id }}
+      register: wif_pools
+      changed_when: false
+
+    - name: Print remaining WIF pools
+      ansible.builtin.debug:
+        var: wif_pools.stdout

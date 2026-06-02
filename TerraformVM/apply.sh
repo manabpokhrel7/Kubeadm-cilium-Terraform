@@ -7,6 +7,6 @@ terraform output > output.txt
 ./output.sh
 rm -rf output.txt
 ###Apply ansible configuration
-sleep 10
-cd ../
-./ansible.sh
+#sleep 10
+#cd ../
+#./ansible.sh

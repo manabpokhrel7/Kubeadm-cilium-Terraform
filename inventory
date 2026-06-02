@@ -1,11 +1,11 @@
 [control]
-control1 ansible_host=34.83.125.115
-control2 ansible_host=136.109.243.149
-control3 ansible_host=136.117.196.168
+control1 ansible_host=34.11.131.193
+control2 ansible_host=104.198.11.14
+control3 ansible_host=8.229.0.109
 
 [workers]
-worker1 ansible_host=10.138.0.60
-worker2 ansible_host=10.138.0.59
+worker1 ansible_host=10.138.15.198
+worker2 ansible_host=10.138.15.197
 
 [all:vars]
 ansible_user=manabpokhrel7
@@ -13,4 +13,4 @@ ansible_ssh_private_key_file=~/.ssh/id_rsa
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [workers:vars]
-ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ProxyJump=manabpokhrel7@34.83.125.115'
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ProxyJump=manabpokhrel7@34.11.131.193'
