@@ -12,6 +12,6 @@ spec:
     - http01:
         gatewayHTTPRoute:
           parentRefs:
-          - name: envoy-gateway
-            namespace: envoy-gateway-system
+          - name: example-gateway
+            namespace: default
 #This entire resource tells which is the CA
