@@ -8,9 +8,9 @@
       register: cluster_issuer
 
     - name: Download the cluster's JSON Web Key Set (JWKS)
-      shell: | 
+      shell: |
         kubectl get --raw /openid/v1/jwks > cluster-jwks.json
-        
+
     - name: Create the WIF pool id
       shell: |
         gcloud iam workload-identity-pools create secret-pool \
@@ -24,17 +24,17 @@
 
     - name: Add the Kubernetes cluster as a workload identity pool provider and upload the cluster's JWKS
       shell: |
-        gcloud iam workload-identity-pools providers create-oidc secret-provider2 \
+        gcloud iam workload-identity-pools providers create-oidc secret-provider3 \
             --location="global" \
             --workload-identity-pool="secret-pool" \
             --issuer-uri="{{ cluster_issuer.stdout }}" \
             --attribute-mapping="google.subject=assertion.sub,attribute.namespace=assertion['kubernetes.io']['namespace'],attribute.service_account_name=assertion['kubernetes.io']['serviceaccount']['name'],attribute.pod=assertion['kubernetes.io']['pod']['name']" \
-            --jwk-json-path="cluster-jwks.json" 
+            --jwk-json-path="cluster-jwks.json"
 
     - name: Create a Kubernetes ServiceAccount
       shell: |
         kubectl create namespace react || true
-        kubectl create serviceaccount external-secrets --namespace react
+        kubectl create serviceaccount external-secrets --namespace react || true
 
     - name: Grant IAM access to the Kubernetes ServiceAccount for a Google Cloud resource
       shell: |
