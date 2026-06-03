@@ -1,0 +1,7 @@
+- name: Temp tasks
+  become: yes
+  hosts: workers
+  tasks:
+    - name: temp task
+      shell: |
+        ip addr add 136.117.221.39/32 dev lo

@@ -18,6 +18,7 @@ CONTROL3=$(awk -F'"' 'NR==9 { print $4 }' output.txt)
 
 WORKER1=$(terraform output -raw worker1_private_ip)
 WORKER2=$(terraform output -raw worker2_private_ip)
+TCPWorker=$(terraform output -raw load_balancer_ip)
 
 cat > ../inventory <<EOF
 [control]
@@ -28,6 +29,9 @@ control3 ansible_host=$CONTROL3
 [workers]
 worker1 ansible_host=$WORKER1
 worker2 ansible_host=$WORKER2
+
+[loadbalancer]
+workerlb ansible_host=$TCPWorker
 
 [all:vars]
 ansible_user=manabpokhrel7

@@ -1,6 +1,8 @@
 - name: Join on the worker node
   hosts: workers
   become: true
+  vars:
+    worker_lb_vip: "{{ hostvars['workerlb']['ansible_host'] }}"
   tasks:
     - name: Update the cache
       ansible.builtin.dnf:
@@ -23,3 +25,8 @@
     - name: Create a Persistent Volume location for kubernetes stateful apps we also created a persistenvolume.yaml file to mount to this location
       shell: |
         mkdir -p /mnt/data/ 
+
+    - name: Add LB to linux we need to add this since out linux worker vm dont have any public ip so when it recieves healthcheck packets from the loadbalancer linux says i dont have a public ip and drops the packets
+      ansible.builtin.shell: |
+          ip addr show lo | grep -q "{{ worker_lb_vip }}/32" || ip addr add "{{ worker_lb_vip }}/32" dev lo
+
