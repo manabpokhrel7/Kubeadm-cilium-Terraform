@@ -18,3 +18,72 @@ spec:
     - kubernetes.manabpokhrel.com.np
     - grafana.manabpokhrel.com.np
     - prometheus.manabpokhrel.com.np
+#      How it works
+#1. cert-manager creates an ACME account key pair
+#   (Private Key + Public Key)
+#
+#2. cert-manager registers the account with Let's Encrypt
+#   and sends the Public Key.
+#
+#3. Let's Encrypt stores the Public Key
+#   and associates it with the ACME account.
+#
+#4. cert-manager requests a certificate
+#   for grafana.manabpokhrel.com.np, etc.
+#
+#5. The ACME request is signed using the
+#   ACME Private Key.
+#
+#6. Let's Encrypt verifies the signature
+#   using the ACME Public Key it already has.
+#
+#7. Let's Encrypt sends back a challenge token.
+#
+#8. cert-manager creates:
+#      CertificateRequest
+#      Order
+#      Challenge
+#      Solver Pod
+#      Solver Service
+#      Solver HTTPRoute
+#
+#9. cert-manager computes:
+#
+#      Token + Thumbprint(Public Key)
+#
+#   (NOT Token + Public Key)
+#
+#   and serves that value through the Solver Pod.
+#
+#10. Let's Encrypt performs:
+#
+#      GET http://domain/.well-known/acme-challenge/token
+#
+#11. Let's Encrypt computes the same:
+#
+#      Token + Thumbprint(Public Key)
+#
+#    using the Public Key registered earlier.
+#
+#12. If the served value matches the expected value,
+#    the Challenge becomes Valid.
+#
+#13. After all Challenges are Valid,
+#    the Order becomes Valid.
+#
+#14. cert-manager generates the WEBSITE TLS key pair
+#    (separate from the ACME account key pair).
+#
+#15. cert-manager sends a CSR to Let's Encrypt.
+#
+#16. Let's Encrypt signs the CSR and returns
+#    the certificate chain.
+#
+#17. cert-manager stores:
+#       tls.crt
+#       tls.key
+#
+#    in manab-tls-cert-secret.
+#
+#18. Envoy loads manab-tls-cert-secret
+#    and starts serving HTTPS.
