@@ -1,5 +1,5 @@
 - name: setting up kubernetes cluster with kubeadm and cilium CNS
-  hosts: all
+  hosts: control, workers
   become: true
   tasks:
     - name: Update the cache

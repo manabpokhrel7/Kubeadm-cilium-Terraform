@@ -1,15 +1,15 @@
 control_public_ip = {
   "control1" = {
-    "nat_ip" = "34.145.68.122"
+    "nat_ip" = "8.231.128.88"
   }
   "control2" = {
-    "nat_ip" = "34.168.62.55"
+    "nat_ip" = "34.177.112.172"
   }
   "control3" = {
-    "nat_ip" = "34.177.115.6"
+    "nat_ip" = "34.53.7.13"
   }
 }
 load_balancer_ip = "136.117.221.39"
 tcp_load_balancer_ip = "35.252.226.106"
-worker1_private_ip = "10.138.15.203"
-worker2_private_ip = "10.138.15.202"
+worker1_private_ip = "10.138.15.213"
+worker2_private_ip = "10.138.15.212"

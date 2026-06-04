@@ -39,5 +39,5 @@ ansible_ssh_private_key_file=~/.ssh/id_rsa
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [workers:vars]
-ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ProxyJump=manabpokhrel7@$CONTROL1'
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -W %h:%p manabpokhrel7@$CONTROL1"'
 EOF
