@@ -4,4 +4,11 @@
   tasks:
     - name: temp task
       shell: |
-        ip addr add 136.117.221.39/32 dev lo
+        dnf install -y iptables-services
+        systemctl enable iptables  
+        iptables -t nat -C PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 30080 || \  
+        iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 30080  
+        iptables -t nat -C PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 31977 || \ 
+        iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 31977
+        service iptables save
+        systemctl restart iptables

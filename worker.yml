@@ -30,3 +30,13 @@
       ansible.builtin.shell: |
           ip addr show lo | grep -q "{{ worker_lb_vip }}/32" || ip addr add "{{ worker_lb_vip }}/32" dev lo
 
+    - name: Since we have nothing listening on port 80/443 from where the lb traffic comes from envoy is only listening on nodeports we need to do port mapping else linux drops the packet as well
+      shell: |
+        dnf install -y iptables-services
+        systemctl enable iptables  
+        iptables -t nat -C PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 30080 || \  
+        iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 30080  
+        iptables -t nat -C PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 31977 || \ 
+        iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 31977
+        service iptables save
+        systemctl restart iptables
