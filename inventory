@@ -1,11 +1,11 @@
 [control]
 control1 ansible_host=34.105.33.25
 control2 ansible_host=34.168.68.118
-control3 ansible_host=8.229.169.207
+control3 ansible_host=8.231.178.116
 
 [workers]
-worker1 ansible_host=10.138.15.223
-worker2 ansible_host=10.138.15.222
+worker1 ansible_host=10.138.15.227
+worker2 ansible_host=10.138.15.228
 
 [loadbalancer]
 workerlb ansible_host=136.117.221.39
