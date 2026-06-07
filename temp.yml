@@ -3,12 +3,26 @@
   hosts: workers
   tasks:
     - name: temp task
-      shell: |
-        dnf install -y iptables-services
-        systemctl enable iptables  
-        iptables -t nat -C PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 30080 || \  
-        iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 30080  
-        iptables -t nat -C PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 31977 || \ 
-        iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 31977
-        service iptables save
-        systemctl restart iptables
+      ansible.posix.firewalld:
+        port: "{{ item }}"
+        permanent: true
+        immediate: true
+        state: enabled
+      loop:
+        - 8472/udp
+        - 4240/tcp
+        - 8080/tcp
+        - 4244/tcp
+        - 4245/tcp
+        - 4244/tcp
+        - 6443/tcp
+        - 10250/tcp
+        - 30080/tcp #Required for cilium envoy we are using to route traffic
+        - 31974/tcp #Same reason as above but this is for https
+        - 9090/tcp #for prometheus
+        - 3000/tcp #For grafana
+        - 9200/tcp   # Elasticsearch API
+        - 9300/tcp   # Elasticsearch cluster communication
+        - 5601/tcp   # Kibana UI
+        - 5044/tcp   # Filebeat -> Logstash
+        - 9600/tcp   # Logstash monitoring API

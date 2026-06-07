@@ -29,6 +29,7 @@
         - 6443/tcp
         - 10250/tcp
         - 30080/tcp #Required for cilium envoy we are using to route traffic
+        - 31974/tcp #Same reason as above but this is for https
         - 9090/tcp #for prometheus
         - 3000/tcp #For grafana
         - 9200/tcp   # Elasticsearch API

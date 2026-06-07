@@ -7,3 +7,7 @@ cilium-config.yml is used to deploy cilium gateway api/envoy into our cluster fo
 
 WIF.yml configures Workload Identity Federation in our cluster for external secret access linking kubernetes SA to gcp SA and accessing the secret store in gcp
 Requires project id in ansible WIF.yml and manifests/secretstore.yaml
+
+
+tcp_loadbalancer is the lb which connects workers to control node as the backend
+loadbalancer is also tcp but it connects outside world to worker node

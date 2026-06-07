@@ -2,6 +2,7 @@ baseDomain: manabpokhrel.com.np
 
 envoy:
   nodePort: 30080
+  httpsNodePort: 31974
 
 postgres:
   storage:
