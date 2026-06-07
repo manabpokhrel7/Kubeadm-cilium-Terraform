@@ -2,27 +2,9 @@
   become: yes
   hosts: workers
   tasks:
-    - name: temp task
-      ansible.posix.firewalld:
-        port: "{{ item }}"
-        permanent: true
-        immediate: true
-        state: enabled
-      loop:
-        - 8472/udp
-        - 4240/tcp
-        - 8080/tcp
-        - 4244/tcp
-        - 4245/tcp
-        - 4244/tcp
-        - 6443/tcp
-        - 10250/tcp
-        - 30080/tcp #Required for cilium envoy we are using to route traffic
-        - 31974/tcp #Same reason as above but this is for https
-        - 9090/tcp #for prometheus
-        - 3000/tcp #For grafana
-        - 9200/tcp   # Elasticsearch API
-        - 9300/tcp   # Elasticsearch cluster communication
-        - 5601/tcp   # Kibana UI
-        - 5044/tcp   # Filebeat -> Logstash
-        - 9600/tcp   # Logstash monitoring API
+    - name: start firewalld
+      shell: |
+        sudo iptables -t nat -I PREROUTING 1 \
+        -d 136.117.221.39/32 \
+        -p tcp --dport 80 \
+        -j REDIRECT --to-port 30080
