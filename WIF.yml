@@ -24,7 +24,7 @@
 
     - name: Add the Kubernetes cluster as a workload identity pool provider and upload the cluster's JWKS
       shell: |
-        gcloud iam workload-identity-pools providers create-oidc secret-provider10 \
+        gcloud iam workload-identity-pools providers create-oidc secret-provider11 \
             --location="global" \
             --workload-identity-pool="secret-pool" \
             --issuer-uri="{{ cluster_issuer.stdout }}" \

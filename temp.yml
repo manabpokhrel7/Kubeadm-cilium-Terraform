@@ -4,14 +4,17 @@
   vars:
     worker_lb_vip: "{{ hostvars['workerlb']['ansible_host'] }}"
   tasks:
-    - name: start firewalld
+    - name: Configure LB NAT rules
       shell: |
-        dnf install -y iptables-services
-        systemctl enable iptables
-        ip addr show lo | grep -q "{{ worker_lb_vip }}/32" || ip addr add "{{ worker_lb_vip }}/32" dev lo
-        iptables -t nat -C PREROUTING -d "{{ worker_lb_vip }}/32" -p tcp --dport 80 -j REDIRECT --to-port 30080 || \
-        iptables -t nat -I PREROUTING 1 -d "{{ worker_lb_vip }}/32" -p tcp --dport 80 -j REDIRECT --to-port 30080
-        iptables -t nat -C PREROUTING -d "{{ worker_lb_vip }}/32" -p tcp --dport 443 -j REDIRECT --to-port 31974 || \       
-        iptables -t nat -I PREROUTING 2 -d "{{ worker_lb_vip }}/32" -p tcp --dport 443 -j REDIRECT --to-port 31974        
-        service iptables save
-        systemctl restart iptables
+        WORKER_IP=$(ip -4 addr show eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
+        iptables -t nat -D CILIUM_PRE_nat -d {{ worker_lb_vip }}/32 -p tcp --dport 80 -j DNAT --to-destination ${WORKER_IP}:30080 2>/dev/null || true
+        iptables -t nat -D CILIUM_PRE_nat -d {{ worker_lb_vip }}/32 -p tcp --dport 443 -j DNAT --to-destination ${WORKER_IP}:31974 2>/dev/null || true
+        iptables -t nat -I CILIUM_PRE_nat 1 -d {{ worker_lb_vip }}/32 -p tcp --dport 80 -j DNAT --to-destination ${WORKER_IP}:30080
+        iptables -t nat -I CILIUM_PRE_nat 2 -d {{ worker_lb_vip }}/32 -p tcp --dport 443 -j DNAT --to-destination ${WORKER_IP}:31974
+        iptables -t nat -D CILIUM_POST_nat -p tcp -d ${WORKER_IP}/32 --dport 30080 -j MASQUERADE 2>/dev/null || true
+        iptables -t nat -D CILIUM_POST_nat -p tcp -d ${WORKER_IP}/32 --dport 31974 -j MASQUERADE 2>/dev/null || true
+        iptables -t nat -I CILIUM_POST_nat 1 -p tcp -d ${WORKER_IP}/32 --dport 30080 -j MASQUERADE
+        iptables -t nat -I CILIUM_POST_nat 2 -p tcp -d ${WORKER_IP}/32 --dport 31974 -j MASQUERADE
+      args:
+        executable: /bin/bash
+
