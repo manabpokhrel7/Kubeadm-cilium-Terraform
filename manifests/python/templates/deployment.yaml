@@ -52,6 +52,26 @@ spec:
                 secretKeyRef:
                   name: openapi-secrets
                   key: OPENAI_API_KEY
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: openapi-secrets
+                  key: GOOGLE_CLIENT_ID
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: openapi-secrets
+                  key: GOOGLE_CLIENT_SECRET
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: openapi-secrets
+                  key: SECRET_KEY
+            - name: TOKEN_URI
+              valueFrom:
+                secretKeyRef:
+                  name: openapi-secrets
+                  key: TOKEN_URI
 #          startupProbe:
 #            httpGet:
 #              path: /health # Requires a health endpoint in your FastAPI app
