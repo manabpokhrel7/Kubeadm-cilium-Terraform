@@ -11,3 +11,6 @@ spec:
     - fromEndpoints:
         - matchLabels:
             app: react
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: envoy-gateway-system
