@@ -11,3 +11,5 @@ Requires project id in ansible WIF.yml and manifests/secretstore.yaml
 
 tcp_loadbalancer is the lb which connects workers to control node as the backend
 loadbalancer is also tcp but it connects outside world to worker node
+
+nginx is added since envoyproxy doesnt listen on host ports like 80 or 443 directly it only listens to nodeport and since our LB from outside sends traffic to 80 and 443 we installed nginx to listen on 80 and 443 and forward it to envoy nodeports where it is listening

@@ -101,7 +101,7 @@ resource "google_compute_instance_group" "k8s_workers" {
 
   named_port {
     name = "http"
-    port = 30080
+    port = 80
   }
 }
 # 3. Create the modern L4 Regional Backend Service
@@ -128,7 +128,7 @@ resource "google_compute_region_health_check" "l4_tcp_health" {
   timeout_sec        = 5
 
   tcp_health_check {
-    port = 30080 # Plain TCP socket check on your Envoy NodePort
+    port = 80 # Plain TCP socket check on your Envoy NodePort
   }
 #   http_health_check {
 #     port         = 30080

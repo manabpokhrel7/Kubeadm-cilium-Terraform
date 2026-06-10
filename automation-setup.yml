@@ -20,6 +20,8 @@
         immediate: true
         state: enabled 
       loop:
+        - 80/tcp
+        - 443/tcp
         - 8472/udp  
         - 4240/tcp  
         - 8080/tcp
