@@ -18,7 +18,7 @@ spec:
                   nodeSelector:
                     kubernetes.io/os: linux
       envoyService:
-        type: ClusterIP
+        type: NodePort
         patch:
           value:
             spec:
