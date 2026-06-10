@@ -13,8 +13,8 @@ spec:
             spec:
               template:
                 spec:
-                  hostNetwork: true
-                  dnsPolicy: ClusterFirstWithHostNet
+#                  hostNetwork: true
+#                  dnsPolicy: ClusterFirstWithHostNet
                   nodeSelector:
                     kubernetes.io/os: linux
       envoyService:
@@ -26,11 +26,11 @@ spec:
                 - name: http
                   port: 80
                   targetPort: 10080
-#                  nodePort: {{ .Values.envoy.nodePort }}
+                  nodePort: {{ .Values.envoy.nodePort }}
                 - name: https
                   port: 443
                   targetPort: 10443
-#                  nodePort: {{ .Values.envoy.httpsNodePort }}
+                  nodePort: {{ .Values.envoy.httpsNodePort }}
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
