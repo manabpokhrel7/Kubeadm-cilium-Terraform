@@ -1,12 +1,9 @@
 namespace: react
-
 replicaCount: 3
-
 image:
   repository: manabpokhrel7/reactjs
-  tag: latest
+  tag: 3572dc23dd8de7dfa78edcd45f8c1466769cbd60
   pullPolicy: Always
-
 service:
   name: react-service
   type: ClusterIP
