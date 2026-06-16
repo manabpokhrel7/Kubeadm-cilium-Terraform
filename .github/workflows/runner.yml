@@ -49,9 +49,14 @@ jobs:
           kubectl apply -f argocd/application/python-argocd.yaml -n argocd
           kubectl apply -f argocd/application/postgres-argocd.yaml -n argocd
 
+      - name: Install ArgoCD CLI
+        uses: clowdhaus/argo-cd-action/@main
+
       - name: Verify React rollout
         run: |
           set -e
+          kubectl rollout restart deployment react-deployment -n react
+          sleep 15
           if kubectl -n argocd wait application/react-argocd --for=jsonpath='{.status.health.status}'=Healthy --timeout=180s; then
             echo "React rollout successful"
           else
