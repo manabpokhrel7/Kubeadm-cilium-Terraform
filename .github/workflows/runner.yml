@@ -50,7 +50,7 @@ jobs:
       - name: Verify React rollout
         run: |
           set -e
-          if kubectl rollout status deployment/react-deployment -n react --timeout=360s; then
+          if kubectl rollout status deployment/react-deployment -n react --timeout=160s; then
             echo "React rollout successful"
           else
             echo "React rollout failed. Rolling back values.yaml"
