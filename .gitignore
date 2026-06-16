@@ -8,3 +8,6 @@ TerraformVM/*.tfstate.*
 TerraformVM/.terraform
 TerraformVM/.terraform.*
 cluster-jwks.json
+
+#generate by google
+gha-creds-*.json
