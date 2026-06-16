@@ -4,7 +4,7 @@ on: push
 jobs:
   kubernetes_runner:
     permissions:
-      contents: 'read'
+      contents: 'write'
       id-token: 'write'
     runs-on: ubuntu-latest
     steps:
@@ -46,3 +46,20 @@ jobs:
           kubectl apply -f argocd/application/redis-argocd.yaml -n argocd
           kubectl apply -f argocd/application/python-argocd.yaml -n argocd
           kubectl apply -f argocd/application/postgres-argocd.yaml -n argocd
+
+      - name: Verify React rollout
+        run: |
+          set -e
+          if kubectl rollout status deployment/react-deployment -n react --timeout=360s; then
+            echo "React rollout successful"
+          else
+            echo "React rollout failed. Rolling back values.yaml"
+            git config user.email "cicdbotapp@example.com"
+            git config user.name "manab pokhrel cicd app bot"
+            git restore --source=HEAD~1 manifests/react/values.yaml
+            git add manifests/react/values.yaml
+            git commit -m "Rollback react image tag to previous version"
+            git push origin main
+            exit 1
+          fi
+          
