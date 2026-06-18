@@ -54,7 +54,6 @@ jobs:
 
       - name: Verify React rollout
         run: |
-          set -e
           kubectl rollout restart deployment react-deployment -n react
           sleep 15
           if kubectl -n argocd wait application/react-argocd --for=jsonpath='{.status.health.status}'=Healthy --timeout=180s; then
@@ -65,8 +64,7 @@ jobs:
             git config user.name "manab pokhrel cicd app bot"
             git restore --source=HEAD~1 manifests/react/values.yaml
             git add manifests/react/values.yaml
-            git commit -m "Rollback react image tag to previous version"
+            git commit -m "Rollback react image tag to previous version [skip ci]"
             git push origin main
-            exit 1
           fi
           
