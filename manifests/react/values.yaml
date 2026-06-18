@@ -2,7 +2,7 @@ namespace: react
 replicaCount: 3
 image:
   repository: manabpokhrel7/reactjs
-  tag: 398e874a89cf546838e8f770e8676127d1cff3d5
+  tag: c74d3d408b7e9fb2ec90cd65f3d80de99c955897
   pullPolicy: Always
 service:
   name: react-service
