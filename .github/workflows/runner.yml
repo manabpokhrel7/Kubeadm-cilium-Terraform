@@ -54,7 +54,9 @@ jobs:
 
       - name: Verify React rollout
         run: |
+          sleep 10
           kubectl rollout restart deployment react-deployment -n react
+          kubectl -n argocd wait application/react-argocd --for=jsonpath='{.status.sync.status}'=Synced --timeout=180s
           sleep 15
           if kubectl -n argocd wait application/react-argocd --for=jsonpath='{.status.health.status}'=Healthy --timeout=180s; then
             echo "React rollout successful"
