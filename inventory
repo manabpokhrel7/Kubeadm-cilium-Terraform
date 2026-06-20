@@ -1,11 +1,11 @@
 [control]
-control1 ansible_host=8.235.53.11
-control2 ansible_host=8.235.42.21
-control3 ansible_host=8.235.11.184
+control1 ansible_host=35.252.149.220
+control2 ansible_host=8.235.30.87
+control3 ansible_host=8.231.56.220
 
 [workers]
-worker1 ansible_host=10.138.15.198
-worker2 ansible_host=10.138.15.197
+worker1 ansible_host=10.138.15.203
+worker2 ansible_host=10.138.15.202
 
 [loadbalancer]
 workerlb ansible_host=136.117.221.39
@@ -16,4 +16,4 @@ ansible_ssh_private_key_file=~/.ssh/id_rsa
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [workers:vars]
-ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -W %h:%p manabpokhrel7@8.235.53.11"'
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -W %h:%p manabpokhrel7@35.252.149.220"'
