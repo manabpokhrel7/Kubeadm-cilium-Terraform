@@ -16,7 +16,7 @@ spec:
           value: 'true'
   destination:
     server: https://kubernetes.default.svc
-    namespace: database
+    namespace: rook-ceph
   syncPolicy:
     automated:
       prune: true
