@@ -10,11 +10,6 @@ spec:
   source:
     repoURL: 'https://github.com/cloudnative-pg/charts'
     path: charts/cloudnative-pg
-    targetRevision: v0.7.0
-    helm:
-      parameters:
-        - name: installCRDs
-          value: 'true'
   destination:
     server: https://kubernetes.default.svc
     namespace: database
