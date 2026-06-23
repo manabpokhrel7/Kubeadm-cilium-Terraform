@@ -50,6 +50,7 @@ jobs:
           kubectl apply -f argocd/application/postgres-argocd.yaml -n argocd
           kubectl apply -f argocd/application/postgres-operator.yaml -n argocd
           kubectl apply -f argocd/application/rook-ceph.yaml -n argocd
+          kubectl apply -f argocd/application/ceph-cluster.yaml -n argocd
 
       - name: Install ArgoCD CLI
         uses: clowdhaus/argo-cd-action/@main
