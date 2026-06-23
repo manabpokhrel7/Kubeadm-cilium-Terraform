@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rook-ceph
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: 'https://charts.rook.io/release'
+    path: rook-release/rook-ceph
+    helm:
+      parameters:
+        - name: installCRDs
+          value: 'true'
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: database
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace=true
+
