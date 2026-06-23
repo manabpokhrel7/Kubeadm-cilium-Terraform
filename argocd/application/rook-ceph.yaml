@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://charts.rook.io/release'
+    repoURL: 'https://charts.rook.io/'
     path: rook-release/rook-ceph
     helm:
       parameters:
