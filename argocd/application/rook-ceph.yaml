@@ -8,8 +8,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://charts.rook.io/'
-    path: rook-release/rook-ceph
+    repoURL: 'https://charts.rook.io/release'
+    chart: rook-ceph
+    targetRevision: v1.20.1
     helm:
       parameters:
         - name: installCRDs
