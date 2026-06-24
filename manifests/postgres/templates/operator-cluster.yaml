@@ -1,9 +1,10 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: cluster-example
+  name: postgres-operator
   namespace: database
 spec:
   instances: 3
   storage:
     size: 1Gi
+    storageClass: ceph-block
