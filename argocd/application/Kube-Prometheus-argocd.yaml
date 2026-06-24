@@ -12,7 +12,7 @@ spec:
     targetRevision: main
     path: manifests/kube-prometheus-stack
     helm:
-      valueFiles:
+      valueFiles: #This modified values.yaml allows prom to monitor the postgres operator
         - https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/kube-stack-config.yaml
   destination:
     server: https://kubernetes.default.svc
