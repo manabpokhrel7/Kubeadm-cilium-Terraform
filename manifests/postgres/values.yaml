@@ -11,7 +11,7 @@ service:
   port: 5432
 
 storage:
-  className: ceph-block
+  className: manual
   size: 5Gi
 
 replicaCount: 1
