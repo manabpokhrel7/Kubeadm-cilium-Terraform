@@ -5,7 +5,7 @@
   vars:
     project_id: kubeadm-public-ip-lab
     pool_id: secret-pool
-    provider_id: secret-provider27
+    provider_id: secret-provider28
     namespace: react
     ksa_name: external-secrets
 
