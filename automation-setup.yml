@@ -2,6 +2,7 @@
   hosts: control, workers
   become: true
   tasks:
+
     - name: Update the cache
       ansible.builtin.dnf:
         name: "*"

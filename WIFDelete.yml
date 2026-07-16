@@ -3,7 +3,7 @@
   hosts: localhost
   become: false
   vars:
-    project_id: kubeadm-public-ip-lab
+    project_id: project-d64d7939-1f1b-470f-901
     pool_id: secret-pool
     provider_id: secret-provider31
     namespace: react

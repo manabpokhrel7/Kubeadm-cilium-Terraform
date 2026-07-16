@@ -38,9 +38,9 @@
 
     - name: Grant IAM access to the Kubernetes ServiceAccount for a Google Cloud resource
       shell: |
-        gcloud projects add-iam-policy-binding kubeadm-public-ip-lab \
+        gcloud projects add-iam-policy-binding project-d64d7939-1f1b-470f-901 \
           --role=roles/secretmanager.secretAccessor \
-          --member="principal://iam.googleapis.com/projects/$(gcloud projects describe kubeadm-public-ip-lab --format='value(projectNumber)')/locations/global/workloadIdentityPools/secret-pool/subject/system:serviceaccount:react:external-secrets"  \    
+          --member="principal://iam.googleapis.com/projects/$(gcloud projects describe project-d64d7939-1f1b-470f-901 --format='value(projectNumber)')/locations/global/workloadIdentityPools/secret-pool/subject/system:serviceaccount:react:external-secrets"  \    
           --condition=None
           
 #        Pod
