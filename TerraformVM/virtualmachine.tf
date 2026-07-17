@@ -76,3 +76,22 @@ resource "google_compute_instance" "worker2" {
     ssh-keys = "manabpokhrel7:${var.ssh_public_key}"
   }
 }
+resource "google_compute_instance" "worker3" {
+#   for_each = local.nodes
+  name         = "worker3"
+  machine_type = "e2-standard-2"
+  zone         = "us-west1-a"
+  tags = ["ssh-http-https-access"]
+  boot_disk {
+    initialize_params {
+      image = "rocky-linux-cloud/rocky-linux-9"
+    }
+  }
+  network_interface {
+    network       = "default"
+#     access_config {}  # gives public IP
+  }
+  metadata = {
+    ssh-keys = "manabpokhrel7:${var.ssh_public_key}"
+  }
+}

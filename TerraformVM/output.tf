@@ -17,4 +17,7 @@ output "load_balancer_ip" {
 output "tcp_load_balancer_ip" {
   value = google_compute_address.tcp_lb_ip.address
 }
+output "worker3_private_ip" {
+  value = google_compute_instance.worker3.network_interface[0].network_ip
+}
 
