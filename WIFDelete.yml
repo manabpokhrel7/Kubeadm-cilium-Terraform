@@ -5,7 +5,7 @@
   vars:
     project_id: project-d64d7939-1f1b-470f-901
     pool_id: secret-pool
-    provider_id: secret-provider3
+    provider_id: secret-provider4
     namespace: react
     ksa_name: external-secrets
 
