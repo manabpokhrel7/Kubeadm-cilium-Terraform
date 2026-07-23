@@ -4,6 +4,39 @@ metadata:
   name: rook-ceph
   namespace: rook-ceph
 spec:
+  mgr:
+    count: 1
+  resources:
+    mon:
+      requests:
+        cpu: "100m"
+        memory: "512Mi"
+      limits:
+        memory: "1Gi"
+    mgr:
+      requests:
+        cpu: "100m"
+        memory: "512Mi"
+      limits:
+        memory: "1Gi"
+    osd:
+      requests:
+        cpu: "250m"
+        memory: "1Gi"
+      limits:
+        memory: "2Gi"
+    prepareosd:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+    crashcollector:
+      requests:
+        cpu: "25m"
+        memory: "64Mi"
+    exporter:
+      requests:
+        cpu: "25m"
+        memory: "64Mi"
   dataDirHostPath: /var/lib/rook # Mon data will live here on the VM OS drive
   mon:
     count: 3
