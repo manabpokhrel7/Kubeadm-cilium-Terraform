@@ -14,7 +14,7 @@ spec:
 
       # Use the exact chart version shown by:
       # helm search repo ceph-csi-operator/ceph-csi-drivers --versions
-      targetRevision: "<CHART_VERSION>"
+      targetRevision: "1.0.4"
 
       helm:
         valueFiles:
