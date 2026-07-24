@@ -4,22 +4,30 @@ metadata:
   name: rook-ceph-csi
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   project: default
-  source:
-    repoURL: 'https://ceph.github.io/ceph-csi-operator'
-    chart: ceph-csi-drivers
-    targetRevision: v1.20.1
-    helm:
-      valueFiles:
-        - https://raw.githubusercontent.com/rook/rook/v1.20.2/deploy/charts/ceph-csi-drivers/values.yaml
-      parameters:
-        - name: installCRDs
-          value: 'true'
+
+  sources:
+    - repoURL: https://ceph.github.io/ceph-csi-operator
+      chart: ceph-csi-drivers
+
+      # Use the exact chart version shown by:
+      # helm search repo ceph-csi-operator/ceph-csi-drivers --versions
+      targetRevision: "<CHART_VERSION>"
+
+      helm:
+        valueFiles:
+          - $rookvalues/deploy/charts/ceph-csi-drivers/values.yaml
+
+    - repoURL: https://github.com/rook/rook.git
+      targetRevision: v1.20.2
+      ref: rookvalues
+
   destination:
     server: https://kubernetes.default.svc
     namespace: rook-ceph
+
   syncPolicy:
     automated:
       prune: true
@@ -27,4 +35,3 @@ spec:
     syncOptions:
       - ServerSideApply=true
       - CreateNamespace=true
-
