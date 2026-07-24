@@ -17,7 +17,13 @@ resource "google_compute_firewall" "allow_my_ssh" {
       "9090",  # Prometheus
       "9200",  # Elasticsearch API
       "9300",  # Elasticsearch cluster communication
-      "9600"   # Logstash monitoring API
+      "9600",   # Logstash monitoring API
+      # Rook-Ceph
+      "3300",        # Ceph Messenger v2
+      "6789",        # Ceph Messenger v1
+      "6800-7568",   # Ceph daemon communication
+      # PostgreSQL (only if accessed externally)
+      "5432"
     ]
   }
 

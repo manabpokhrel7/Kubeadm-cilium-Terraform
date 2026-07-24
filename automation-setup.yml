@@ -40,6 +40,9 @@
         - 5601/tcp   # Kibana UI
         - 5044/tcp   # Filebeat -> Logstash
         - 9600/tcp   # Logstash monitoring API
+        - 3300/tcp   # Rook-ceph and operator
+        - 6789/tcp   # Rook-ceph and operator
+        - 6800-7568/tcp  # Rook-ceph and operator
 
     - name: Enable networking on kubernetes
       shell: |
