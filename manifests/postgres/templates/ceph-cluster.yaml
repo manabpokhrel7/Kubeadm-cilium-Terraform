@@ -58,12 +58,9 @@ spec:
       - name: "worker1"
         devices:
           - name: "sdb"
-            metadataDevice: "worker1"
       - name: "worker2"
         devices:
           - name: "sdb"
-            metadataDevice: "worker2"
       - name: "worker3"
         devices:
           - name: "sdb"
-            metadataDevice: "worker3"
