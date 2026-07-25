@@ -1,42 +1,42 @@
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: postgres-deployment
-  namespace: {{ .Values.namespace }}
-spec:
-  serviceName: {{ .Values.service.name }}
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      app: database
-  template:
-    metadata:
-      labels:
-        app: database
-    spec:
-      containers:
-        - name: postgres
-          image: {{ .Values.postgres.image }}
-          ports:
-            - containerPort: 5432
-          env:
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
-          envFrom:
-            - configMapRef:
-                name: postgres-config
-            - secretRef:
-                name: postgres-secret
-          volumeMounts:
-            - name: postgres-data
-              mountPath: /var/lib/postgresql/data
-  volumeClaimTemplates:
-    - metadata:
-        name: postgres-data
-      spec:
-        storageClassName: {{ .Values.storage.className }}
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: {{ .Values.storage.size }}
+#apiVersion: apps/v1
+#kind: StatefulSet
+#metadata:
+#  name: postgres-deployment
+#  namespace: {{ .Values.namespace }}
+#spec:
+#  serviceName: {{ .Values.service.name }}
+#  replicas: {{ .Values.replicaCount }}
+#  selector:
+#    matchLabels:
+#      app: database
+#  template:
+#    metadata:
+#      labels:
+#        app: database
+#    spec:
+#      containers:
+#        - name: postgres
+#          image: {{ .Values.postgres.image }}
+#          ports:
+#            - containerPort: 5432
+#          env:
+#            - name: PGDATA
+#              value: /var/lib/postgresql/data/pgdata
+#          envFrom:
+#            - configMapRef:
+#                name: postgres-config
+#            - secretRef:
+#                name: postgres-secret
+#          volumeMounts:
+#            - name: postgres-data
+#              mountPath: /var/lib/postgresql/data
+#  volumeClaimTemplates:
+#    - metadata:
+#        name: postgres-data
+#      spec:
+#        storageClassName: {{ .Values.storage.className }}
+#        accessModes:
+#          - ReadWriteOnce
+#        resources:
+#          requests:
+#            storage: {{ .Values.storage.size }}

@@ -1,10 +1,33 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres-operator
+  name: postgres
   namespace: database
 spec:
   instances: 3
+
+  imageName: ghcr.io/cloudnative-pg/postgresql:17 #Use this image since CloudNativePG doesnt support official docker image
+
   storage:
-    size: 1Gi
+    size: 5Gi
     storageClass: ceph-block
+
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 250m
+    limits:
+      memory: 1Gi
+      cpu: "1"
+
+  bootstrap:
+    initdb:
+      database: {{ .Values.postgres.database | quote }}
+      owner: {{ .Values.postgres.user | quote }}
+      secret:
+        name: postgres-app-credentials
+
+  postgresql:
+    parameters:
+      max_connections: "200"
+      shared_buffers: "256MB"
