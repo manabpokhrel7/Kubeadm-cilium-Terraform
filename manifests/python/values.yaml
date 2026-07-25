@@ -5,7 +5,7 @@ image:
   tag: d84131284263f9dc07360f8d492966c69b5e5722
   pullPolicy: Always
 config:
-  DB_HOST: postgres-service.database.svc.cluster.local
+  DB_HOST: postgres-rw.database.svc.cluster.local
   DB_USER: postgres
   DB_NAME: amldb
   REDIS_HOST: redis-service.redis.svc.cluster.local
