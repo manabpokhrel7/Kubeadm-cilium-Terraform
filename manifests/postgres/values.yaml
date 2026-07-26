@@ -2,7 +2,7 @@ namespace: database
 
 postgres:
   image: postgres:15
-  user: postgres
+  user: manab
   database: amldb
   password: Sujankhadka77$
 

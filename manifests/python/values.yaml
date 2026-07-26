@@ -6,7 +6,7 @@ image:
   pullPolicy: Always
 config:
   DB_HOST: postgres-rw.database.svc.cluster.local
-  DB_USER: postgres
+  DB_USER: manab
   DB_NAME: amldb
   REDIS_HOST: redis-service.redis.svc.cluster.local
 secret:
