@@ -10,19 +10,19 @@ resource "google_compute_disk" "ceph_disks" {
 # 2. Attach each disk to its corresponding VM node
 resource "google_compute_attached_disk" "attach_ceph_disks1" {
   disk        = google_compute_disk.ceph_disks[1].id
-  instance    = "worker1" # Replace with your actual VM resource name reference
+  instance    = google_compute_instance.worker1.id # Replace with your actual VM resource name reference
   zone         = "us-west1-a"
   device_name = "ceph-device"
 }
 resource "google_compute_attached_disk" "attach_ceph_disks2" {
   disk        = google_compute_disk.ceph_disks[0].id
-  instance    = "worker2" # Replace with your actual VM resource name reference
+  instance    = google_compute_instance.worker2.id # Replace with your actual VM resource name reference
   zone         = "us-west1-a"
   device_name = "ceph-device"
 }
 resource "google_compute_attached_disk" "attach_ceph_disks3" {
   disk        = google_compute_disk.ceph_disks[2].id
-  instance    = "worker3" # Replace with your actual VM resource name reference
+  instance    = google_compute_instance.worker3.id # Replace with your actual VM resource name reference
   zone         = "us-west1-a"
   device_name = "ceph-device"
 }
