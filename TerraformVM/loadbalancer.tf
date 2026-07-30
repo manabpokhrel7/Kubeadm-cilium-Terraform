@@ -92,7 +92,7 @@ resource "google_compute_forwarding_rule" "https" {
 }
 resource "google_compute_instance_group" "k8s_workers" {
   name = "k8s-workers"
-  zone = "us-west1-a"
+  zone = var.zone
 
   instances = [
     google_compute_instance.worker1.self_link,

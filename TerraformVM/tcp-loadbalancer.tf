@@ -5,7 +5,7 @@ resource "google_compute_address" "tcp_lb_ip" {
 
 resource "google_compute_instance_group" "k8s_control_planes" {
   name = "k8s-control-planes"
-  zone = "us-west1-a"
+  zone = var.zone
 
     instances = [for instance in google_compute_instance.control : instance.self_link]
 

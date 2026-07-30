@@ -27,3 +27,8 @@ variable "SECRET_KEY" {
   description = "Random key secret"
   sensitive   = true
 }
+
+variable "zone" {
+  type = string
+  description = "The zone of the resource"
+}

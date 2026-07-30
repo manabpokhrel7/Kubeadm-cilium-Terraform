@@ -3,7 +3,7 @@ resource "google_compute_disk" "ceph_disks" {
   count = 3
   name  = "ceph-disk-${count.index}"
   type  = "pd-balanced"
-  zone  = "us-west1-a" # Match the zone your VMs are running in
+  zone  = var.zone # Match the zone your VMs are running in
   size  = 20               # 20 GB per disk is plenty for testing
 }
 
@@ -11,18 +11,18 @@ resource "google_compute_disk" "ceph_disks" {
 resource "google_compute_attached_disk" "attach_ceph_disks1" {
   disk        = google_compute_disk.ceph_disks[1].id
   instance    = google_compute_instance.worker1.id # Replace with your actual VM resource name reference
-  zone         = "us-west1-a"
+  zone         = var.zone
   device_name = "ceph-device"
 }
 resource "google_compute_attached_disk" "attach_ceph_disks2" {
   disk        = google_compute_disk.ceph_disks[0].id
   instance    = google_compute_instance.worker2.id # Replace with your actual VM resource name reference
-  zone         = "us-west1-a"
+  zone         = var.zone
   device_name = "ceph-device"
 }
 resource "google_compute_attached_disk" "attach_ceph_disks3" {
   disk        = google_compute_disk.ceph_disks[2].id
   instance    = google_compute_instance.worker3.id # Replace with your actual VM resource name reference
-  zone         = "us-west1-a"
+  zone         = var.zone
   device_name = "ceph-device"
 }
