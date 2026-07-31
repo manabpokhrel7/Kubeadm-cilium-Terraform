@@ -8,7 +8,7 @@ resource "google_secret_manager_secret" "secret-basic" {
   replication {
     user_managed {
       replicas {
-        location = "us-west1"
+        location = var.region
       }
       replicas {
         location = "us-east1"

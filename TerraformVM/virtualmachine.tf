@@ -11,7 +11,7 @@ variable "regional_ip"{
 resource "google_compute_address" "control_ip" {
   for_each = toset(var.regional_ip)
   name   = each.value
-  region = "us-west1"
+  region = var.region
 }
 
 resource "google_compute_instance" "control" {

@@ -32,3 +32,7 @@ variable "zone" {
   type = string
   description = "The zone of the resource"
 }
+variable "region" {
+  type = string
+  description = "The region of the resource"
+}

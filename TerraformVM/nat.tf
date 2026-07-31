@@ -1,6 +1,6 @@
 resource "google_compute_router" "nat_router" {
   name    = "k8s-nat-router"
-  region  = "us-west1"
+  region  = var.region
   network = "default"
 }
 
