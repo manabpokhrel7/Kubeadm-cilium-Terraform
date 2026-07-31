@@ -1,20 +1,20 @@
 - name: Temp tasks
   become: yes
-  hosts: control, workers
+  hosts: control[0]
   vars:
     worker_lb_vip: "{{ hostvars['workerlb']['ansible_host'] }}"
   tasks:
-    - name: enable firewall ports
-      ansible.posix.firewalld:
-        port: "{{ item }}"
-        permanent: true
-        immediate: true
-        state: enabled
-      loop:
-        - 6789/tcp
-        - 3300/tcp
-        - 8081/tcp
-        - 3300/tcp   # Rook-ceph and operator
-        - 6789/tcp   # Rook-ceph and operator
-        - 6800-7568/tcp  # Rook-ceph and operator
+    - name: Copy the kubeconfig to localhost pt 1
+      shell: |
+        cat ~/.kube/config
+      register: kube_config
+
+    - name: Copy the kubeconfig to  localhost pt 2
+      delegate_to: localhost
+      become: false
+      copy:
+        content: |
+          {{ kube_config.stdout }}
+        dest: ~/.kube/config
+        mode: '0755'
 
