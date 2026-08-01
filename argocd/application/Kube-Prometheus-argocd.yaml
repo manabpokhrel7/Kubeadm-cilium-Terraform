@@ -11,9 +11,6 @@ spec:
     repoURL: 'https://github.com/manabpokhrel7/Kubeadm-cilium-Terraform.git'
     targetRevision: main
     path: manifests/kube-prometheus-stack
-    helm:
-      valueFiles: #This modified values.yaml allows prom to monitor the postgres operator
-        - https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/kube-stack-config.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-prometheus-stack
