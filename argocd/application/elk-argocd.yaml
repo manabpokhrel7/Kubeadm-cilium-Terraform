@@ -15,13 +15,12 @@ spec:
       values: |
         eck-operator:
           enabled: true
-        
         eck-kibana:
           enabled: true
-        
         eck-fleet-server:
           enabled: true
-        
+          deployment:
+            enabled: true
         eck-agent:
           enabled: true
   destination:
