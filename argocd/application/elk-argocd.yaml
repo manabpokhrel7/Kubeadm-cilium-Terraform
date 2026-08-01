@@ -8,16 +8,29 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/manabpokhrel7/Kubeadm-cilium-Terraform.git'
-    targetRevision: main
-    path: manifests/ELK-Stack
-#    helm:
-#      valueFiles:
-#        - values.yaml
-#        - env/dev/dev-values.yaml     # optional layered override
+    repoURL: 'https://helm.elastic.co'
+    targetRevision: 0.19.1
+    chart: eck-stack
+    helm:
+      values: |
+        eck-operator:
+          enabled: true
+        
+        eck-kibana:
+          enabled: true
+        
+        eck-fleet-server:
+          enabled: true
+        
+        eck-agent:
+          enabled: true
   destination:
     server: https://kubernetes.default.svc
+    namespace: elastic-system
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
