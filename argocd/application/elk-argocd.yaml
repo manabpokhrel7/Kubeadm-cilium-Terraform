@@ -23,6 +23,8 @@ spec:
             enabled: true
         eck-agent:
           enabled: true
+          deployment:
+            enabled: true
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic-system
