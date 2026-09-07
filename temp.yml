@@ -1,20 +1,15 @@
 - name: Temp tasks
   become: yes
-  hosts: control[0]
+  hosts: control, workers
   vars:
     worker_lb_vip: "{{ hostvars['workerlb']['ansible_host'] }}"
   tasks:
-    - name: Copy the kubeconfig to localhost pt 1
-      shell: |
-        cat ~/.kube/config
-      register: kube_config
-
-    - name: Copy the kubeconfig to  localhost pt 2
-      delegate_to: localhost
-      become: false
-      copy:
-        content: |
-          {{ kube_config.stdout }}
-        dest: ~/.kube/config
-        mode: '0755'
+    - name: enable firewall ports
+      ansible.posix.firewalld:
+        port: "{{ item }}"
+        permanent: true
+        immediate: true
+        state: enabled
+      loop:
+        - 11434/tcp # Ollama container port
 
