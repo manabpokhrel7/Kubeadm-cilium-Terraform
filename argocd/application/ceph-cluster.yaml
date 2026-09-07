@@ -15,6 +15,13 @@ spec:
       parameters:
         - name: installCRDs
           value: 'true'
+        - name: cephImage.repository
+          value: quay.io/ceph/ceph
+        - name: cephImage.tag
+          value: v20.2.2-20260616
+        - name: hostpathRequiresPrivileged
+          value: "true"
+
   destination:
     server: https://kubernetes.default.svc
     namespace: rook-ceph
