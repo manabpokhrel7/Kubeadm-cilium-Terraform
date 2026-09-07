@@ -43,6 +43,7 @@
         - 3300/tcp   # Rook-ceph and operator
         - 6789/tcp   # Rook-ceph and operator
         - 6800-7568/tcp  # Rook-ceph and operator
+        - 11434/tcp # Ollama container port
 
     - name: Enable networking on kubernetes
       shell: |

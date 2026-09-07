@@ -23,7 +23,8 @@ resource "google_compute_firewall" "allow_my_ssh" {
       "6789",        # Ceph Messenger v1
       "6800-7568",   # Ceph daemon communication
       # PostgreSQL (only if accessed externally)
-      "5432"
+      "5432",
+      "11434" # Ollama
     ]
   }
 
