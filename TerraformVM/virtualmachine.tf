@@ -24,6 +24,8 @@ resource "google_compute_instance" "control" {
   boot_disk {
     initialize_params {
       image = "rocky-linux-cloud/rocky-linux-9"
+      size  = 100
+      type  = "pd-balanced"
     }
   }
   network_interface {
@@ -47,6 +49,8 @@ resource "google_compute_instance" "worker1" {
   boot_disk {                       
     initialize_params {             
       image = "rocky-linux-cloud/rocky-linux-9"
+      size  = 100
+      type  = "pd-balanced"
     }                               
   }
   network_interface {
@@ -67,6 +71,8 @@ resource "google_compute_instance" "worker2" {
   boot_disk {                       
     initialize_params {             
       image = "rocky-linux-cloud/rocky-linux-9"
+      size  = 100
+      type  = "pd-balanced"
     }                               
   }
   network_interface {
@@ -87,6 +93,8 @@ resource "google_compute_instance" "worker3" {
   boot_disk {
     initialize_params {
       image = "rocky-linux-cloud/rocky-linux-9"
+      size  = 100
+      type  = "pd-balanced"
     }
   }
   network_interface {
