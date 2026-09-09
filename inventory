@@ -4,9 +4,9 @@ control2 ansible_host=
 control3 ansible_host=
 
 [workers]
-worker1 ansible_host=10.138.0.63
-worker2 ansible_host=10.138.0.58
-worker3 ansible_host=10.138.0.62
+worker1 ansible_host=
+worker2 ansible_host=
+worker3 ansible_host=
 
 [loadbalancer]
 workerlb ansible_host=34.82.101.16
