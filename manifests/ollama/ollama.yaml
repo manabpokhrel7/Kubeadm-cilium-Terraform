@@ -29,6 +29,15 @@ spec:
       containers:
       - name: ollama
         image: ollama/ollama:latest
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - |                 
+                  until ollama list >/dev/null 2>&1; do sleep 2; done                 
+                  ollama pull qwen3:4b
         ports:
         - name: http
           containerPort: 11434
