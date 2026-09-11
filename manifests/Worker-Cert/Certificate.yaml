@@ -18,6 +18,7 @@ spec:
     - kubernetes.manabpokhrel.com.np
     - grafana.manabpokhrel.com.np
     - prometheus.manabpokhrel.com.np
+    - ollama.manabpokhrel.com.np
 #      How it works
 #1. cert-manager creates an ACME account key pair
 #   (Private Key + Public Key)
