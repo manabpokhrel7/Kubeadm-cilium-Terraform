@@ -17,6 +17,9 @@ metadata:
   name: ollama
   namespace: ollama
 spec:
+  strategy:
+    type:
+      Recreate
   replicas: 1
   selector:
     matchLabels:
@@ -26,9 +29,6 @@ spec:
       labels:
         app: ollama
     spec:
-      strategy:
-        type:
-          Recreate
       containers:
       - name: ollama
         image: ollama/ollama:latest
