@@ -26,6 +26,9 @@ spec:
       labels:
         app: ollama
     spec:
+      strategy:
+        type:
+          Recreate
       containers:
       - name: ollama
         image: ollama/ollama:latest
