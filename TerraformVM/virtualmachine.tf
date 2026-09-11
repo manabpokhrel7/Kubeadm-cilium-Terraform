@@ -24,7 +24,7 @@ resource "google_compute_instance" "control" {
   boot_disk {
     initialize_params {
       image = "rocky-linux-cloud/rocky-linux-9"
-      size  = 100
+      size  = 30
       type  = "pd-balanced"
     }
   }

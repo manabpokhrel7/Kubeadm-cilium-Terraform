@@ -1,2 +1,2 @@
 #!/bin/bash 
-kubeadm join api.kubernetes.manabpokhrel.com.np:6443 --token fb9uxu.g2n132rzezigdk6z --discovery-token-ca-cert-hash sha256:84c90f1f15c6093a6f6174a0700da7ed26f3b74b5793838b2aa5c22a3e9ade87  --control-plane --certificate-key ed681098e1ce72b0d8a1ec4bb9a14e9abdb16e0340a00a615c965d20f9d68f95
+kubeadm join api.kubernetes.manabpokhrel.com.np:6443 --token 0bhdfe.wco7dkmstmz8dshp --discovery-token-ca-cert-hash sha256:4ed3f114f8c9dc5d81f361fe019d014655c61deff6a363f556326dad3dffd340  --control-plane --certificate-key 61937b82f8d567741229ca66a1622653088a71c02f24e1aacee7fd64f2ffae79
