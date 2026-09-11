@@ -57,10 +57,10 @@ spec:
     nodes:
       - name: "worker1"
         devices:
-          - name: "sdb"
+          - name: "sda"
       - name: "worker2"
         devices:
-          - name: "sdb"
+          - name: "sda"
       - name: "worker3"
         devices:
           - name: "sdb"

@@ -1,15 +1,16 @@
 - name: Temp tasks
   become: yes
-  hosts: control, workers
+  hosts: workers
   vars:
     worker_lb_vip: "{{ hostvars['workerlb']['ansible_host'] }}"
   tasks:
     - name: enable firewall ports
-      ansible.posix.firewalld:
-        port: "{{ item }}"
-        permanent: true
-        immediate: true
-        state: enabled
-      loop:
-        - 11434/tcp # Ollama container port
+      shell: |
+        lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINTS,MODEL,SERIAL
+      register: the_message
+
+    - name: show message
+      debug:
+        var: the_message.stdout
+
 
