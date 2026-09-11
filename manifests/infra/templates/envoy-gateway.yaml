@@ -138,7 +138,11 @@ spec:
   parentRefs:
     - name: example-gateway
   rules:
-    - backendRefs:
+    - timeouts:
+        request: 5m
+        backendRequest: 5m
+
+      backendRefs:
         - name: ollama
           namespace: ollama
           port: 11434
