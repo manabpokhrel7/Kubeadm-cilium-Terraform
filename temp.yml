@@ -6,7 +6,9 @@
   tasks:
     - name: enable firewall ports
       shell: |
-        lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINTS,MODEL,SERIAL
+        for n in worker1 worker2 worker3; do
+          ssh $n 'readlink -f /dev/disk/by-id/google-ceph-device'
+        done
       register: the_message
 
     - name: show message
