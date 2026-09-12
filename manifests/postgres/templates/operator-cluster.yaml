@@ -26,6 +26,9 @@ spec:
       owner: {{ .Values.postgres.user | quote }}
       secret:
         name: postgres-app-credentials
+      # --- ADD THIS BLOCK TO ENABLE PGVECTOR AUTOMATICALLY ---
+      postInitTemplateSQL:
+        - CREATE EXTENSION IF NOT EXISTS vector;
 
   postgresql:
     parameters:

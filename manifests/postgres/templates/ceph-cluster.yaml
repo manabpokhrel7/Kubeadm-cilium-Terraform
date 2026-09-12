@@ -57,10 +57,10 @@ spec:
     nodes:
       - name: "worker1"
         devices:
-          - name: "sda"
+          - name: "/dev/disk/by-id/google-ceph-device"
       - name: "worker2"
         devices:
-          - name: "sda"
+          - name: "/dev/disk/by-id/google-ceph-device"
       - name: "worker3"
         devices:
-          - name: "sdb"
+          - name: "/dev/disk/by-id/google-ceph-device"
