@@ -18,8 +18,7 @@ metadata:
   namespace: ollama
 spec:
   strategy:
-    type:
-      Recreate
+    type: Recreate
   replicas: 1
   selector:
     matchLabels:
@@ -41,6 +40,7 @@ spec:
                 - |                 
                   until ollama list >/dev/null 2>&1; do sleep 2; done                 
                   ollama pull qwen3:4b
+                  ollama pull dolphin-mistral
         ports:
         - name: http
           containerPort: 11434
