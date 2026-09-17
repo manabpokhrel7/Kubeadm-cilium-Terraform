@@ -2,7 +2,7 @@ namespace: react
 replicaCount: 3
 image:
   repository: manabpokhrel7/python-cloud
-  tag: 8ed96efc3231d6f5872da688dc29686a3fc03576
+  tag: 2fadd628c5f85dbc5d22cf0c31b6f9f73240dd88
   pullPolicy: Always
 config:
   DB_HOST: postgres-rw.database.svc.cluster.local
